@@ -1,0 +1,71 @@
+{
+  "id": "cosmos-chair",
+  "type": "product",
+  "title": "Cosmos Ergonomic Chair - Premium Office Seating",
+  "description": "Premium ergonomic office chair with advanced lumbar support, breathable mesh back, and adjustable features for optimal comfort during long work sessions.",
+  "canonical": "https://albata.com/product/cosmos-chair",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com/product/cosmos-chair",
+    "es": "https://albata.com/es/product/cosmos-chair"
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "ergonomic chair, office chair, lumbar support, mesh chair, adjustable chair"
+    },
+    {
+      "name": "price",
+      "content": "599.99"
+    },
+    {
+      "name": "availability",
+      "content": "in stock"
+    }
+  ],
+  "openGraph": {
+    "type": "product",
+    "title": "Cosmos Ergonomic Chair",
+    "description": "Premium lumbar support with breathable mesh back.",
+    "url": "https://albata.com/product/cosmos-chair",
+    "images": [
+      {
+        "url": "https://albata.com/images/cosmos-chair-main.jpg",
+        "alt": "Cosmos Ergonomic Chair"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "Cosmos Ergonomic Chair",
+    "description": "Premium lumbar support with breathable mesh back.",
+    "image": "https://albata.com/images/cosmos-chair-twitter.jpg"
+  },
+  "structuredData": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Cosmos Ergonomic Chair",
+      "description": "Premium ergonomic office chair with advanced lumbar support",
+      "brand": {
+        "@type": "Brand",
+        "name": "Albata"
+      },
+      "category": "Office Furniture",
+      "image": "https://albata.com/images/cosmos-chair-main.jpg",
+      "offers": {
+        "@type": "Offer",
+        "price": "599.99",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://albata.com/product/cosmos-chair"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "127"
+      }
+    }
+  ],
+  "updatedAt": "2025-08-23T00:00:00.000Z"
+} 

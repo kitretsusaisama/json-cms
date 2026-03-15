@@ -1,0 +1,31 @@
+name: Run Validated NPM Script
+description: Validates that an npm script exists in package.json before executing it.
+inputs:
+  script:
+    description: Name of the npm script to execute.
+    required: true
+  working-directory:
+    description: Directory containing package.json.
+    required: false
+    default: .
+  args:
+    description: Optional arguments forwarded to `npm run <script>`.
+    required: false
+    default: ''
+runs:
+  using: composite
+  steps:
+    - name: Validate script exists
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        NPM_SCRIPT: ${{ inputs.script }}
+      run: node "${{ github.action_path }}/scripts/validate-script.cjs" "$NPM_SCRIPT"
+
+    - name: Run npm script
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        NPM_SCRIPT: ${{ inputs.script }}
+        NPM_ARGS: ${{ inputs.args }}
+      run: node "${{ github.action_path }}/scripts/run-script.cjs"

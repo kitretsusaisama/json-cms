@@ -1,0 +1,1 @@
+{"version":3,"file":"framework-detection.d.ts","sourceRoot":"","sources":["../../src/framework-detection.ts"],"names":[],"mappings":"AAOA,eAAO,MAAM,iBAAiB,qDAAoD,CAAC;AAGnF,MAAM,WAAW,wBAAwB;IACvC,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,UAAU,CAAC,EAAE,MAAM,CAAC;IACpB,SAAS,EAAE,OAAO,CAAC;CACpB;AAED,wBAAsB,0BAA0B,CAAC,GAAG,EAAE,MAAM,GAAG,OAAO,CAAC,wBAAwB,CAAC,CAe/F"}

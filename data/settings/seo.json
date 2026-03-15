@@ -1,0 +1,126 @@
+{
+  "siteName": "Albata",
+  "siteUrl": "${NEXT_PUBLIC_SITE_URL}",
+  "defaultTitle": "Albata - Modern Web Platform with Advanced SEO & Security",
+  "titleTemplate": "%s | Albata",
+  "defaultDescription": "Enterprise-grade web platform featuring advanced SEO optimization, robust security, and scalable architecture for modern businesses.",
+  "keywords": ["web platform", "cms", "seo", "security", "enterprise", "scalable", "modern"],
+  "author": "Albata Platform Team",
+  "robots": {
+    "index": true,
+    "follow": true,
+    "googleBot": {
+      "index": true,
+      "follow": true,
+      "noimageindex": false,
+      "maxImagePreview": "large",
+      "maxSnippet": -1,
+      "maxVideoPreview": -1
+    }
+  },
+  "openGraph": {
+    "type": "website",
+    "locale": "en_US",
+    "url": "${NEXT_PUBLIC_SITE_URL}",
+    "siteName": "Albata",
+    "images": [
+      {
+        "url": "${NEXT_PUBLIC_SITE_URL}/images/og-default.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Albata - Modern Web Platform"
+      }
+    ]
+  },
+  "twitter": {
+    "handle": "@albata",
+    "site": "@albata",
+    "cardType": "summary_large_image"
+  },
+  "verification": {
+    "google": "${GOOGLE_SITE_VERIFICATION}",
+    "bing": "${BING_SITE_VERIFICATION}",
+    "yandex": "${YANDEX_SITE_VERIFICATION}",
+    "pinterest": "${PINTEREST_SITE_VERIFICATION}"
+  },
+  "structuredData": {
+    "enabled": true,
+    "organization": {
+      "@type": "Organization",
+      "name": "Albata",
+      "url": "${NEXT_PUBLIC_SITE_URL}",
+      "logo": "${NEXT_PUBLIC_SITE_URL}/images/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-555-0123",
+        "contactType": "customer service",
+        "email": "support@albata.com"
+      },
+      "sameAs": [
+        "https://twitter.com/albata",
+        "https://linkedin.com/company/albata-platform",
+        "https://github.com/albata-platform"
+      ]
+    },
+    "website": {
+      "@type": "WebSite",
+      "name": "Albata",
+      "url": "${NEXT_PUBLIC_SITE_URL}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "${NEXT_PUBLIC_SITE_URL}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  },
+  "sitemap": {
+    "enabled": true,
+    "changefreq": "daily",
+    "priority": 0.8,
+    "lastmod": true,
+    "excludePaths": ["/admin", "/api", "/private"],
+    "additionalPaths": ["/sitemap.xml", "/robots.txt"]
+  },
+  "canonical": {
+    "enabled": true,
+    "trailingSlash": false
+  },
+  "hreflang": {
+    "enabled": true,
+    "defaultLocale": "en",
+    "locales": [
+      {
+        "code": "en",
+        "url": "${NEXT_PUBLIC_SITE_URL}"
+      },
+      {
+        "code": "es",
+        "url": "${NEXT_PUBLIC_SITE_URL}/es"
+      },
+      {
+        "code": "fr",
+        "url": "${NEXT_PUBLIC_SITE_URL}/fr"
+      }
+    ]
+  },
+  "performance": {
+    "criticalCSS": true,
+    "preconnect": [
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com",
+      "https://www.google-analytics.com"
+    ],
+    "prefetch": ["/api/health", "/manifest.json"],
+    "preload": ["/fonts/inter.woff2"]
+  },
+  "monitoring": {
+    "lighthouse": true,
+    "coreWebVitals": true,
+    "alerts": {
+      "performanceThreshold": 90,
+      "accessibilityThreshold": 95,
+      "seoThreshold": 95,
+      "bestPracticesThreshold": 90
+    }
+  }
+}

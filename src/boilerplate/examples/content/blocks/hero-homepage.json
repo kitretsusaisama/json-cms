@@ -1,0 +1,209 @@
+{
+  "id": "hero.homepage",
+  "tree": [
+    {
+      "id": "hero-container",
+      "key": "Container",
+      "props": {
+        "maxWidth": "7xl",
+        "className": "px-4 py-20 lg:py-32"
+      },
+      "slotIds": ["hero-content"],
+      "weight": 1
+    }
+  ],
+  "slots": [
+    {
+      "id": "hero-content",
+      "name": "content",
+      "accepts": ["HeroContent", "Grid", "Flex"],
+      "itemIds": ["hero-main-content"]
+    }
+  ],
+  "components": [
+    {
+      "id": "hero-main-content",
+      "key": "HeroContent",
+      "props": {
+        "heading": {
+          "$i18n": "homepage.hero.heading",
+          "fallback": "Build Amazing Experiences"
+        },
+        "subheading": {
+          "$i18n": "homepage.hero.subheading",
+          "fallback": "Create powerful, constraint-aware user interfaces with our JSON-driven CMS platform."
+        },
+        "image": {
+          "src": "/images/hero-illustration.svg",
+          "alt": "Platform illustration",
+          "width": 600,
+          "height": 400
+        },
+        "buttons": [
+          {
+            "text": { "$i18n": "common.getStarted" },
+            "href": "/signup",
+            "variant": "primary",
+            "size": "lg"
+          },
+          {
+            "text": { "$i18n": "common.learnMore" },
+            "href": "/docs",
+            "variant": "secondary",
+            "size": "lg"
+          }
+        ],
+        "features": [
+          {
+            "icon": "⚡",
+            "text": "Lightning Fast"
+          },
+          {
+            "icon": "🎯",
+            "text": "Constraint-Aware"
+          },
+          {
+            "icon": "🔧",
+            "text": "Highly Customizable"
+          }
+        ]
+      },
+      "variants": [
+        {
+          "name": "centered",
+          "props": {
+            "layout": "centered",
+            "textAlign": "center",
+            "imagePosition": "bottom"
+          },
+          "weight": 3,
+          "conditions": [
+            {
+              "when": {
+                "op": "==",
+                "args": [{ "$ctx": "device" }, "desktop"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "split",
+          "props": {
+            "layout": "split",
+            "textAlign": "left",
+            "imagePosition": "right"
+          },
+          "weight": 2,
+          "conditions": [
+            {
+              "when": {
+                "op": "and",
+                "args": [
+                  {
+                    "op": "==",
+                    "args": [{ "$ctx": "device" }, "desktop"]
+                  },
+                  {
+                    "op": ">=",
+                    "args": [{ "$ctx": "viewport.width" }, 1200]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "stacked",
+          "props": {
+            "layout": "stacked",
+            "textAlign": "center",
+            "imagePosition": "top",
+            "compact": true
+          },
+          "weight": 1,
+          "conditions": [
+            {
+              "when": {
+                "op": "in",
+                "args": [{ "$ctx": "device" }, ["mobile", "tablet"]]
+              }
+            }
+          ]
+        },
+        {
+          "name": "minimal",
+          "props": {
+            "layout": "minimal",
+            "showImage": false,
+            "showFeatures": false,
+            "textAlign": "center"
+          },
+          "weight": 1,
+          "conditions": [
+            {
+              "when": {
+                "op": "==",
+                "args": [{ "$ctx": "ab.heroVariant" }, "minimal"]
+              }
+            }
+          ]
+        }
+      ],
+      "weight": 5,
+      "analytics": {
+        "id": "homepage-hero",
+        "tags": ["conversion", "above-fold", "primary-cta"]
+      }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "hero-has-heading",
+      "rule": {
+        "op": "has",
+        "args": [{ "$ctx": "components.0.props" }, "heading"]
+      }
+    },
+    {
+      "id": "hero-has-cta",
+      "rule": {
+        "op": "and",
+        "args": [
+          {
+            "op": "has",
+            "args": [{ "$ctx": "components.0.props" }, "buttons"]
+          },
+          {
+            "op": ">",
+            "args": [
+              { "$ctx": "components.0.props.buttons.length" },
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "heading-length",
+      "level": "warn",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "components.0.props.heading.length" },
+          60
+        ]
+      }
+    },
+    {
+      "id": "max-buttons",
+      "level": "warn",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "components.0.props.buttons.length" },
+          3
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "title": "Error - Something Went Wrong | Albata",
+  "description": "We encountered an error while processing your request. Our team has been notified and is working to resolve the issue.",
+  "keywords": ["error", "problem", "issue", "Albata error"],
+  "openGraph": {
+    "title": "Error - Something Went Wrong | Albata",
+    "description": "We encountered an error while processing your request. Our team has been notified and is working to resolve the issue.",
+    "type": "website",
+    "images": [
+      {
+        "url": "/images/error-og-image.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Albata Error Page"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary",
+    "title": "Error - Something Went Wrong | Albata",
+    "description": "We encountered an error while processing your request. Our team has been notified and is working to resolve the issue.",
+    "image": "/images/error-twitter-image.jpg",
+    "imageAlt": "Albata Error Page"
+  },
+  "robots": {
+    "index": false,
+    "follow": true
+  },
+  "integrityToken": "c7b6a5d4e3f2"
+}

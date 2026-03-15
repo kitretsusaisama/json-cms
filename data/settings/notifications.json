@@ -1,0 +1,197 @@
+{
+  "channels": [
+    {
+      "id": "email",
+      "type": "email",
+      "enabled": true,
+      "config": {
+        "provider": "sendgrid",
+        "fromEmail": "notifications@albata.com",
+        "fromName": "Albata Platform",
+        "replyTo": "support@albata.com"
+      }
+    },
+    {
+      "id": "slack",
+      "type": "slack",
+      "enabled": true,
+      "config": {
+        "webhookUrl": "${SLACK_WEBHOOK_URL}",
+        "channel": "#alerts",
+        "username": "Albata Bot"
+      }
+    },
+    {
+      "id": "discord",
+      "type": "discord",
+      "enabled": false,
+      "config": {
+        "webhookUrl": "${DISCORD_WEBHOOK_URL}",
+        "username": "Albata Bot"
+      }
+    },
+    {
+      "id": "sms",
+      "type": "sms",
+      "enabled": false,
+      "config": {
+        "provider": "twilio",
+        "fromNumber": "${TWILIO_PHONE_NUMBER}"
+      }
+    },
+    {
+      "id": "push",
+      "type": "push",
+      "enabled": true,
+      "config": {
+        "fcmServerKey": "${FCM_SERVER_KEY}",
+        "vapidKeys": {
+          "publicKey": "${VAPID_PUBLIC_KEY}",
+          "privateKey": "${VAPID_PRIVATE_KEY}"
+        }
+      }
+    }
+  ],
+  "templates": [
+    {
+      "id": "system-alert",
+      "name": "System Alert",
+      "channels": ["email", "slack"],
+      "priority": "high",
+      "subject": "🚨 System Alert: {{alertType}}",
+      "body": "Alert: {{message}}\n\nTime: {{timestamp}}\nSeverity: {{severity}}\nComponent: {{component}}",
+      "slack": {
+        "color": "danger",
+        "fields": [
+          {"title": "Alert Type", "value": "{{alertType}}", "short": true},
+          {"title": "Severity", "value": "{{severity}}", "short": true},
+          {"title": "Component", "value": "{{component}}", "short": false}
+        ]
+      }
+    },
+    {
+      "id": "performance-degradation",
+      "name": "Performance Degradation",
+      "channels": ["email", "slack"],
+      "priority": "medium",
+      "subject": "⚠️ Performance Alert: {{metric}} degraded",
+      "body": "Performance metric {{metric}} has degraded:\n\nCurrent Value: {{currentValue}}\nThreshold: {{threshold}}\nTime: {{timestamp}}",
+      "slack": {
+        "color": "warning",
+        "fields": [
+          {"title": "Metric", "value": "{{metric}}", "short": true},
+          {"title": "Current Value", "value": "{{currentValue}}", "short": true}
+        ]
+      }
+    },
+    {
+      "id": "security-incident",
+      "name": "Security Incident",
+      "channels": ["email", "slack", "sms"],
+      "priority": "critical",
+      "subject": "🔒 CRITICAL: Security Incident Detected",
+      "body": "SECURITY ALERT: {{incidentType}}\n\nDescription: {{description}}\nSource IP: {{sourceIP}}\nUser: {{user}}\nTime: {{timestamp}}\n\nImmediate action required!",
+      "slack": {
+        "color": "danger",
+        "fields": [
+          {"title": "Incident Type", "value": "{{incidentType}}", "short": true},
+          {"title": "Source IP", "value": "{{sourceIP}}", "short": true},
+          {"title": "Affected User", "value": "{{user}}", "short": false}
+        ]
+      }
+    },
+    {
+      "id": "payment-failed",
+      "name": "Payment Failed",
+      "channels": ["email"],
+      "priority": "high",
+      "subject": "Payment Processing Failed",
+      "body": "A payment has failed:\n\nCustomer: {{customerEmail}}\nAmount: {{amount}}\nReason: {{failureReason}}\nTime: {{timestamp}}"
+    },
+    {
+      "id": "backup-success",
+      "name": "Backup Completed",
+      "channels": ["slack"],
+      "priority": "low",
+      "subject": "✅ Backup completed successfully",
+      "slack": {
+        "color": "good",
+        "text": "Database backup completed successfully at {{timestamp}}"
+      }
+    },
+    {
+      "id": "user-signup",
+      "name": "New User Signup",
+      "channels": ["email"],
+      "priority": "low",
+      "subject": "Welcome to Albata!",
+      "body": "Welcome {{userName}},\n\nThank you for signing up for Albata Platform. Your account has been created successfully.\n\nGet started: {{loginUrl}}\n\nBest regards,\nThe Albata Team"
+    }
+  ],
+  "alerts": {
+    "enabled": true,
+    "rules": [
+      {
+        "id": "error-rate-spike",
+        "name": "Error Rate Spike",
+        "condition": "error_rate > 5%",
+        "window": "5m",
+        "template": "system-alert",
+        "enabled": true,
+        "cooldown": "15m"
+      },
+      {
+        "id": "response-time-high",
+        "name": "High Response Time",
+        "condition": "avg_response_time > 2000ms",
+        "window": "10m",
+        "template": "performance-degradation",
+        "enabled": true,
+        "cooldown": "30m"
+      },
+      {
+        "id": "disk-usage-high",
+        "name": "High Disk Usage",
+        "condition": "disk_usage > 85%",
+        "window": "1m",
+        "template": "system-alert",
+        "enabled": true,
+        "cooldown": "1h"
+      },
+      {
+        "id": "memory-usage-high",
+        "name": "High Memory Usage",
+        "condition": "memory_usage > 90%",
+        "window": "5m",
+        "template": "system-alert",
+        "enabled": true,
+        "cooldown": "30m"
+      },
+      {
+        "id": "failed-logins",
+        "name": "Multiple Failed Logins",
+        "condition": "failed_login_attempts > 10",
+        "window": "5m",
+        "template": "security-incident",
+        "enabled": true,
+        "cooldown": "1h"
+      }
+    ]
+  },
+  "preferences": {
+    "defaultChannel": "email",
+    "quietHours": {
+      "enabled": true,
+      "start": "22:00",
+      "end": "08:00",
+      "timezone": "UTC",
+      "emergencyOverride": true
+    },
+    "rateLimiting": {
+      "enabled": true,
+      "maxPerHour": 100,
+      "maxPerDay": 500,
+      "burstLimit": 10
+    }
+  }
+}

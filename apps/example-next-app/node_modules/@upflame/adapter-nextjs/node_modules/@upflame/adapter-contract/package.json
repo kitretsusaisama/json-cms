@@ -1,0 +1,35 @@
+{
+  "name": "@upflame/adapter-contract",
+  "version": "0.1.0",
+  "description": "Adapter V1 contract and conformance suite for Upflame CMS adapters.",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./testing": {
+      "types": "./dist/types/testing.d.ts",
+      "import": "./dist/esm/testing.js",
+      "require": "./dist/cjs/testing.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs .",
+    "test": "vitest run --config vitest.config.ts src/__tests__/conformance.test.ts",
+    "prepack": "pnpm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.4"
+  }
+}

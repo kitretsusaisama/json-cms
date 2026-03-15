@@ -1,0 +1,15 @@
+{
+  "id": "content.text",
+  "tree": [
+    {
+      "id": "text-content",
+      "key": "TextBlock",
+      "props": {
+        "content": "This privacy policy outlines how we collect, use, and protect your personal information.",
+        "variant": "body",
+        "className": "prose max-w-4xl mx-auto py-16"
+      },
+      "weight": 2
+    }
+  ]
+}

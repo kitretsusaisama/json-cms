@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/package",
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs ."
+  },
+  "notes": [
+    "Use with adapter packages that compile from src/ to dist/esm, dist/cjs, and dist/types.",
+    "Keep source in src/ and exclude src/**/__tests__/** from package tsconfig."
+  ]
+}

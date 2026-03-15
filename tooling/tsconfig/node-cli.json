@@ -1,0 +1,7 @@
+{
+  "extends": "./package-library.json",
+  "compilerOptions": {
+    "lib": ["es2022"],
+    "types": ["node"]
+  }
+}

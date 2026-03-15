@@ -1,0 +1,35 @@
+{
+  "name": "@upflame/schema-engine",
+  "version": "1.0.0",
+  "description": "Framework-agnostic schema contracts for the Upflame CMS ecosystem.",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs .",
+    "test": "vitest run --config vitest.config.ts src/__tests__/schemas.test.ts",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "json-schema": "^0.4.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.24.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.4"
+  }
+}

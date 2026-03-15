@@ -1,0 +1,32 @@
+{
+  "id": "_defaults",
+  "type": "category",
+  "title": "{{name}} | Shop {{name}} | Albata",
+  "description": "Browse our collection of {{name}}. {{description}}",
+  "canonical": "https://albata.com/categories/{{slug}}",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com/categories/{{slug}}",
+    "es": "https://albata.com/es/categorias/{{slug}}"
+  },
+  "openGraph": {
+    "type": "website",
+    "title": "{{name}} | Albata",
+    "description": "Browse our collection of {{name}}. {{description}}",
+    "url": "https://albata.com/categories/{{slug}}",
+    "images": [
+      {
+        "url": "{{imageUrl || 'https://albata.com/images/categories/{{slug}}.jpg'}}",
+        "width": 1200,
+        "height": 630,
+        "alt": "{{name}}"
+      }
+    ]
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "{{name}}, {{keywords || ''}}"
+    }
+  ]
+}

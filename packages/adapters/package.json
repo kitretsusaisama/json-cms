@@ -1,0 +1,70 @@
+{
+  "name": "@upflame/adapters",
+  "version": "0.2.0",
+  "description": "Adapter registry and framework entrypoints for CMS integrations.",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./nextjs": {
+      "types": "./dist/types/frameworks/nextjs/index.d.ts",
+      "import": "./dist/esm/frameworks/nextjs/index.js",
+      "require": "./dist/cjs/frameworks/nextjs/index.js"
+    },
+    "./astro": {
+      "types": "./dist/types/frameworks/astro/index.d.ts",
+      "import": "./dist/esm/frameworks/astro/index.js",
+      "require": "./dist/cjs/frameworks/astro/index.js"
+    },
+    "./gatsby": {
+      "types": "./dist/types/frameworks/gatsby/index.d.ts",
+      "import": "./dist/esm/frameworks/gatsby/index.js",
+      "require": "./dist/cjs/frameworks/gatsby/index.js"
+    },
+    "./remix": {
+      "types": "./dist/types/frameworks/remix/index.d.ts",
+      "import": "./dist/esm/frameworks/remix/index.js",
+      "require": "./dist/cjs/frameworks/remix/index.js"
+    },
+    "./registry": {
+      "types": "./dist/types/registry.d.ts",
+      "import": "./dist/esm/registry.js",
+      "require": "./dist/cjs/registry.js"
+    },
+    "./adapter-nextjs": {
+      "types": "./dist/types/frameworks/nextjs/index.d.ts",
+      "import": "./dist/esm/frameworks/nextjs/index.js",
+      "require": "./dist/cjs/frameworks/nextjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "templates",
+    "nextjs",
+    "astro",
+    "gatsby",
+    "remix"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs .",
+    "test": "vitest run --config vitest.config.ts",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "@upflame/adapter-contract": "^0.1.0",
+    "@upflame/adapter-nextjs": "^1.0.0",
+    "@upflame/cms-core": "^0.1.0",
+    "@upflame/runtime": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.4"
+  }
+}

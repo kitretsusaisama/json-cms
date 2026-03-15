@@ -1,0 +1,80 @@
+{
+    "id": "about",
+    "type": "page",
+    "title": "About Albata — Company, Mission, and Team",
+    "description": "Learn about Albata's mission, values, and team.",
+    "canonical": "https://albata.com/about",
+    "robots": "index,follow",
+    "alternates": {
+      "en": "https://albata.com/about",
+      "es": "https://albata.com/es/about"
+    },
+    "meta": [
+      {
+        "name": "keywords",
+        "content": "web platform, next.js, seo, json pages, security, headless cms, jamstack, react"
+      },
+      {
+        "name": "author",
+        "content": "Albata Team"
+      },
+      {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1.0"
+      },
+      {
+        "name": "theme-color",
+        "content": "#ffffff"
+      }
+    ],
+    "openGraph": {
+      "type": "website",
+      "locale": "en_US",
+      "url": "https://albata.com/about",
+      "title": "About Albata — Company, Mission, and Team",
+      "description": "Learn about Albata's mission, values, and team.",
+      "site_name": "Albata",
+      "images": [
+        {
+          "url": "https://albata.com/images/og-about.jpg",
+          "width": 1200,
+          "height": 630,
+          "alt": "About Albata"
+        }
+      ]
+    },
+    "twitter": {
+      "card": "summary_large_image",
+      "site": "@albata",
+      "creator": "@albata",
+      "title": "About Albata — Company, Mission, and Team",
+      "description": "Learn about Albata's mission, values, and team.",
+      "image": "https://albata.com/images/twitter-about.jpg"
+    },
+    "structuredData": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Albata",
+        "url": "https://albata.com/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://albata.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Albata",
+        "url": "https://albata.com",
+        "logo": "https://albata.com/logo.png",
+        "sameAs": [
+          "https://twitter.com/albata",
+          "https://github.com/albata",
+          "https://www.linkedin.com/company/albata"
+        ]
+      }
+    ],
+    "updatedAt": "2025-08-23T13:25:00.000Z"
+  }

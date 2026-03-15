@@ -1,0 +1,1 @@
+{"version":3,"file":"define-plugin.d.ts","sourceRoot":"","sources":["../../src/define-plugin.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAEV,gBAAgB,EAChB,eAAe,EACf,iBAAiB,EAGlB,MAAM,SAAS,CAAC;AAGjB,wBAAgB,YAAY,CAAC,UAAU,EAAE;IACvC,QAAQ,EAAE,iBAAiB,CAAC;IAC5B,SAAS,EAAE,eAAe,CAAC;CAC5B,GAAG,gBAAgB,CAOnB;AAED,eAAO,MAAM,YAAY,qBAAe,CAAC"}

@@ -1,0 +1,157 @@
+{
+  "webhooks": [
+    {
+      "id": "payment-success",
+      "name": "Payment Success Webhook",
+      "url": "${WEBHOOK_PAYMENT_SUCCESS_URL}",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer ${WEBHOOK_AUTH_TOKEN}",
+        "Content-Type": "application/json"
+      },
+      "events": ["payment.success", "subscription.created"],
+      "enabled": true,
+      "retryPolicy": {
+        "maxRetries": 3,
+        "retryDelay": 1000,
+        "backoffMultiplier": 2
+      }
+    },
+    {
+      "id": "user-signup",
+      "name": "User Signup Webhook",
+      "url": "${WEBHOOK_USER_SIGNUP_URL}",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer ${WEBHOOK_AUTH_TOKEN}",
+        "Content-Type": "application/json"
+      },
+      "events": ["user.created", "user.verified"],
+      "enabled": true
+    }
+  ],
+  "apis": {
+    "crm": {
+      "provider": "hubspot",
+      "enabled": false,
+      "config": {
+        "apiKey": "${HUBSPOT_API_KEY}",
+        "portalId": "${HUBSPOT_PORTAL_ID}",
+        "syncContacts": true,
+        "syncDeals": true,
+        "syncCompanies": true
+      }
+    },
+    "email": {
+      "provider": "sendgrid",
+      "enabled": true,
+      "config": {
+        "apiKey": "${SENDGRID_API_KEY}",
+        "fromEmail": "noreply@albata.com",
+        "fromName": "Albata Platform",
+        "templates": {
+          "welcome": "d-xxx",
+          "passwordReset": "d-yyy",
+          "paymentSuccess": "d-zzz"
+        }
+      }
+    },
+    "sms": {
+      "provider": "twilio",
+      "enabled": false,
+      "config": {
+        "accountSid": "${TWILIO_ACCOUNT_SID}",
+        "authToken": "${TWILIO_AUTH_TOKEN}",
+        "fromNumber": "${TWILIO_PHONE_NUMBER}"
+      }
+    },
+    "storage": {
+      "provider": "aws-s3",
+      "enabled": true,
+      "config": {
+        "accessKeyId": "${AWS_ACCESS_KEY_ID}",
+        "secretAccessKey": "${AWS_SECRET_ACCESS_KEY}",
+        "region": "${AWS_REGION}",
+        "bucket": "${AWS_S3_BUCKET}",
+        "cloudFrontDomain": "${AWS_CLOUDFRONT_DOMAIN}"
+      }
+    },
+    "cdn": {
+      "provider": "cloudflare",
+      "enabled": true,
+      "config": {
+        "zoneId": "${CLOUDFLARE_ZONE_ID}",
+        "apiToken": "${CLOUDFLARE_API_TOKEN}",
+        "purgeCache": true,
+        "minifyAssets": true
+      }
+    }
+  },
+  "monitoring": {
+    "sentry": {
+      "enabled": true,
+      "dsn": "${SENTRY_DSN}",
+      "environment": "${NODE_ENV}",
+      "tracesSampleRate": 0.1,
+      "profilesSampleRate": 0.1
+    },
+    "datadog": {
+      "enabled": false,
+      "apiKey": "${DATADOG_API_KEY}",
+      "appKey": "${DATADOG_APP_KEY}",
+      "site": "datadoghq.com"
+    },
+    "newrelic": {
+      "enabled": false,
+      "licenseKey": "${NEW_RELIC_LICENSE_KEY}",
+      "appName": "Albata Platform"
+    }
+  },
+  "authentication": {
+    "oauth": {
+      "google": {
+        "enabled": true,
+        "clientId": "${GOOGLE_CLIENT_ID}",
+        "clientSecret": "${GOOGLE_CLIENT_SECRET}",
+        "scope": ["email", "profile"]
+      },
+      "github": {
+        "enabled": true,
+        "clientId": "${GITHUB_CLIENT_ID}",
+        "clientSecret": "${GITHUB_CLIENT_SECRET}",
+        "scope": ["user:email"]
+      },
+      "microsoft": {
+        "enabled": false,
+        "clientId": "${MICROSOFT_CLIENT_ID}",
+        "clientSecret": "${MICROSOFT_CLIENT_SECRET}",
+        "scope": ["openid", "profile", "email"]
+      }
+    },
+    "saml": {
+      "enabled": false,
+      "entityId": "${SAML_ENTITY_ID}",
+      "ssoUrl": "${SAML_SSO_URL}",
+      "certificate": "${SAML_CERTIFICATE}"
+    }
+  },
+  "search": {
+    "provider": "algolia",
+    "enabled": false,
+    "config": {
+      "applicationId": "${ALGOLIA_APP_ID}",
+      "apiKey": "${ALGOLIA_API_KEY}",
+      "searchOnlyApiKey": "${ALGOLIA_SEARCH_KEY}",
+      "indexName": "albata_content"
+    }
+  },
+  "cache": {
+    "redis": {
+      "enabled": true,
+      "url": "${REDIS_URL}",
+      "maxRetries": 3,
+      "retryDelay": 100,
+      "ttl": 3600
+    }
+  }
+}

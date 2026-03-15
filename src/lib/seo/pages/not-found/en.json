@@ -1,0 +1,30 @@
+{
+  "title": "404 - Page Not Found | Albata",
+  "description": "The page you're looking for doesn't exist or has been moved. Please check the URL or navigate back to our homepage.",
+  "keywords": ["404", "page not found", "missing page", "error"],
+  "openGraph": {
+    "title": "404 - Page Not Found | Albata",
+    "description": "The page you're looking for doesn't exist or has been moved. Please check the URL or navigate back to our homepage.",
+    "type": "website",
+    "images": [
+      {
+        "url": "/images/404-og-image.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Page Not Found"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary",
+    "title": "404 - Page Not Found | Albata",
+    "description": "The page you're looking for doesn't exist or has been moved. Please check the URL or navigate back to our homepage.",
+    "image": "/images/404-twitter-image.jpg",
+    "imageAlt": "Page Not Found"
+  },
+  "robots": {
+    "index": false,
+    "follow": true
+  },
+  "integrityToken": "a9b8c7d6e5f4"
+}

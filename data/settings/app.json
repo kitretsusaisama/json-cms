@@ -1,0 +1,44 @@
+{
+  "name": "Albata",
+  "version": "1.0.0",
+  "description": "Modern Web Platform with Advanced SEO & Security",
+  "domain": "albata.com",
+  "environment": "production",
+  "features": {
+    "seo": true,
+    "jsonPages": true,
+    "pwa": true,
+    "ai": false,
+    "analytics": true
+  },
+  "security": {
+    "csp": true,
+    "hsts": true,
+    "rateLimit": true,
+    "auditLog": true
+  },
+  "performance": {
+    "cache": true,
+    "compression": true,
+    "minification": true
+  },
+  "i18n": {
+    "defaultLocale": "en",
+    "supportedLocales": ["en", "es", "fr"],
+    "fallbackLocale": "en"
+  },
+  "theme": {
+    "default": "light",
+    "supported": ["light", "dark", "auto"]
+  },
+  "contact": {
+    "email": "support@albata.com",
+    "phone": "+1-555-0123",
+    "address": "123 Tech Street, Digital City, DC 12345"
+  },
+  "social": {
+    "twitter": "@albata",
+    "linkedin": "albata-platform",
+    "github": "albata-platform"
+  }
+} 

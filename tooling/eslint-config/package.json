@@ -1,0 +1,15 @@
+{
+  "name": "@upflame/eslint-config",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./base.cjs",
+  "exports": {
+    ".": "./base.cjs",
+    "./next": "./next.cjs"
+  },
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": ">=8",
+    "eslint": ">=8",
+    "eslint-config-next": ">=15"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "id": "_defaults",
+  "type": "product",
+  "title": "{{name}} - {{brand}} | Albata",
+  "description": "{{description}}",
+  "canonical": "https://albata.com/products/{{slug}}",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com/products/{{slug}}",
+    "es": "https://albata.com/es/productos/{{slug}}"
+  },
+  "openGraph": {
+    "type": "product",
+    "title": "{{name}}",
+    "description": "{{shortDescription}}",
+    "url": "https://albata.com/products/{{slug}}",
+    "images": [
+      {
+        "url": "{{imageUrl}}",
+        "width": 1200,
+        "height": 630,
+        "alt": "{{name}}"
+      }
+    ],
+    "siteName": "Albata"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "{{name}}",
+    "description": "{{shortDescription}}",
+    "image": "{{imageUrl}}"
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "{{keywords}}, {{category}}, {{brand}}"
+    },
+    {
+      "name": "product:price:amount",
+      "content": "{{price}}"
+    },
+    {
+      "name": "product:price:currency",
+      "content": "USD"
+    },
+    {
+      "name": "product:availability",
+      "content": "{{inStock ? 'in stock' : 'out of stock'}}"
+    },
+    {
+      "name": "product:brand",
+      "content": "{{brand}}"
+    }
+  ]
+}

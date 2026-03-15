@@ -1,0 +1,102 @@
+{
+  "id": "homepage",
+  "title": "Welcome to Our Platform",
+  "blocks": [
+    "hero.homepage",
+    "features.overview",
+    "testimonials.featured",
+    "cta.signup"
+  ],
+  "prepend": [
+    {
+      "id": "announcement-bar",
+      "key": "AnnouncementBar",
+      "props": {
+        "message": { "$i18n": "announcements.current" },
+        "link": {
+          "text": "Learn More",
+          "href": "/announcements"
+        },
+        "variant": "info"
+      },
+      "conditions": [
+        {
+          "when": {
+            "op": "and",
+            "args": [
+              {
+                "op": "has",
+                "args": [{ "$ctx": "settings" }, "showAnnouncements"]
+              },
+              {
+                "op": "==",
+                "args": [{ "$ctx": "settings.showAnnouncements" }, true]
+              }
+            ]
+          }
+        }
+      ],
+      "weight": 1,
+      "analytics": {
+        "id": "announcement-bar",
+        "tags": ["engagement", "announcements"]
+      }
+    }
+  ],
+  "append": [
+    {
+      "id": "newsletter-signup",
+      "key": "NewsletterSignup",
+      "props": {
+        "heading": "Stay Updated",
+        "description": "Get the latest updates and insights delivered to your inbox.",
+        "placeholder": "Enter your email address",
+        "buttonText": "Subscribe",
+        "privacyText": "We respect your privacy. Unsubscribe at any time."
+      },
+      "weight": 1,
+      "analytics": {
+        "id": "newsletter-footer",
+        "tags": ["conversion", "newsletter"]
+      }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "hero-first",
+      "rule": {
+        "op": "==",
+        "args": [
+          { "$ctx": "blocks.0" },
+          "hero.homepage"
+        ]
+      }
+    },
+    {
+      "id": "cta-last",
+      "rule": {
+        "op": "==",
+        "args": [
+          { "$ctx": "blocks.-1" },
+          "cta.signup"
+        ]
+      }
+    },
+    {
+      "id": "max-blocks",
+      "level": "warn",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "blocks.length" },
+          6
+        ]
+      }
+    }
+  ],
+  "context": {
+    "page": "homepage",
+    "section": "marketing",
+    "audience": "general"
+  }
+}

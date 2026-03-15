@@ -1,0 +1,327 @@
+{
+  "id": "features.overview",
+  "tree": [
+    {
+      "id": "features-section",
+      "key": "Section",
+      "props": {
+        "className": "py-16 lg:py-24 bg-gray-50",
+        "id": "features"
+      },
+      "slotIds": ["features-container"],
+      "weight": 1
+    }
+  ],
+  "slots": [
+    {
+      "id": "features-container",
+      "name": "content",
+      "accepts": ["Container"],
+      "itemIds": ["features-wrapper"]
+    },
+    {
+      "id": "features-grid",
+      "name": "grid",
+      "accepts": ["FeatureCard", "Card", "IconCard"],
+      "itemIds": ["feature-1", "feature-2", "feature-3", "feature-4", "feature-5", "feature-6"]
+    }
+  ],
+  "components": [
+    {
+      "id": "features-wrapper",
+      "key": "Container",
+      "props": {
+        "maxWidth": "6xl",
+        "className": "text-center"
+      },
+      "slotIds": ["features-header", "features-grid-container"],
+      "weight": 1
+    },
+    {
+      "id": "features-header",
+      "key": "SectionHeader",
+      "props": {
+        "heading": {
+          "$i18n": "homepage.features.heading",
+          "fallback": "Everything You Need"
+        },
+        "subheading": {
+          "$i18n": "homepage.features.subheading",
+          "fallback": "Powerful features designed to help you build better experiences faster."
+        },
+        "className": "mb-16"
+      },
+      "weight": 1
+    },
+    {
+      "id": "features-grid-container",
+      "key": "Grid",
+      "props": {
+        "cols": { "base": 1, "md": 2, "lg": 3 },
+        "gap": "token:spacing.8",
+        "className": "mt-16"
+      },
+      "slotIds": ["features-grid"],
+      "weight": 2
+    },
+    {
+      "id": "feature-1",
+      "key": "FeatureCard",
+      "props": {
+        "icon": {
+          "type": "emoji",
+          "value": "⚡"
+        },
+        "title": {
+          "$i18n": "features.performance.title",
+          "fallback": "Lightning Fast"
+        },
+        "description": {
+          "$i18n": "features.performance.description",
+          "fallback": "Optimized for speed with intelligent caching and lazy loading."
+        },
+        "link": {
+          "text": "Learn More",
+          "href": "/docs/performance"
+        }
+      },
+      "weight": 3,
+      "analytics": {
+        "id": "feature-performance",
+        "tags": ["feature", "performance"]
+      }
+    },
+    {
+      "id": "feature-2",
+      "key": "FeatureCard",
+      "props": {
+        "icon": {
+          "type": "emoji",
+          "value": "🎯"
+        },
+        "title": {
+          "$i18n": "features.constraints.title",
+          "fallback": "Constraint-Aware"
+        },
+        "description": {
+          "$i18n": "features.constraints.description",
+          "fallback": "Built-in constraint satisfaction ensures your content always meets requirements."
+        },
+        "link": {
+          "text": "Learn More",
+          "href": "/docs/constraints"
+        }
+      },
+      "weight": 3,
+      "analytics": {
+        "id": "feature-constraints",
+        "tags": ["feature", "constraints"]
+      }
+    },
+    {
+      "id": "feature-3",
+      "key": "FeatureCard",
+      "props": {
+        "icon": {
+          "type": "emoji",
+          "value": "🔧"
+        },
+        "title": {
+          "$i18n": "features.customizable.title",
+          "fallback": "Highly Customizable"
+        },
+        "description": {
+          "$i18n": "features.customizable.description",
+          "fallback": "Extend with plugins, custom components, and flexible theming."
+        },
+        "link": {
+          "text": "Learn More",
+          "href": "/docs/customization"
+        }
+      },
+      "weight": 2,
+      "conditions": [
+        {
+          "when": {
+            "op": "!=",
+            "args": [{ "$ctx": "device" }, "mobile"]
+          }
+        }
+      ],
+      "analytics": {
+        "id": "feature-customizable",
+        "tags": ["feature", "customization"]
+      }
+    },
+    {
+      "id": "feature-4",
+      "key": "FeatureCard",
+      "props": {
+        "icon": {
+          "type": "emoji",
+          "value": "🛡️"
+        },
+        "title": {
+          "$i18n": "features.security.title",
+          "fallback": "Enterprise Security"
+        },
+        "description": {
+          "$i18n": "features.security.description",
+          "fallback": "Built-in security features including input sanitization and audit logging."
+        },
+        "link": {
+          "text": "Learn More",
+          "href": "/docs/security"
+        }
+      },
+      "weight": 2,
+      "conditions": [
+        {
+          "when": {
+            "op": "in",
+            "args": [{ "$ctx": "user.plan" }, ["pro", "enterprise"]]
+          }
+        }
+      ],
+      "analytics": {
+        "id": "feature-security",
+        "tags": ["feature", "security", "enterprise"]
+      }
+    },
+    {
+      "id": "feature-5",
+      "key": "FeatureCard",
+      "props": {
+        "icon": {
+          "type": "emoji",
+          "value": "🌐"
+        },
+        "title": {
+          "$i18n": "features.i18n.title",
+          "fallback": "Internationalization"
+        },
+        "description": {
+          "$i18n": "features.i18n.description",
+          "fallback": "Built-in support for multiple languages and localization."
+        },
+        "link": {
+          "text": "Learn More",
+          "href": "/docs/i18n"
+        }
+      },
+      "weight": 2,
+      "analytics": {
+        "id": "feature-i18n",
+        "tags": ["feature", "internationalization"]
+      }
+    },
+    {
+      "id": "feature-6",
+      "key": "FeatureCard",
+      "props": {
+        "icon": {
+          "type": "emoji",
+          "value": "📊"
+        },
+        "title": {
+          "$i18n": "features.analytics.title",
+          "fallback": "Advanced Analytics"
+        },
+        "description": {
+          "$i18n": "features.analytics.description",
+          "fallback": "Track performance, user engagement, and content effectiveness."
+        },
+        "link": {
+          "text": "Learn More",
+          "href": "/docs/analytics"
+        }
+      },
+      "weight": 1,
+      "conditions": [
+        {
+          "when": {
+            "op": "and",
+            "args": [
+              {
+                "op": "!=",
+                "args": [{ "$ctx": "device" }, "mobile"]
+              },
+              {
+                "op": "==",
+                "args": [{ "$ctx": "user.plan" }, "enterprise"]
+              }
+            ]
+          }
+        }
+      ],
+      "analytics": {
+        "id": "feature-analytics",
+        "tags": ["feature", "analytics", "enterprise"]
+      }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "min-features",
+      "rule": {
+        "op": ">=",
+        "args": [
+          { "$ctx": "components.length" },
+          3
+        ]
+      }
+    },
+    {
+      "id": "max-features",
+      "level": "warn",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "components.length" },
+          8
+        ]
+      }
+    },
+    {
+      "id": "features-have-icons",
+      "rule": {
+        "op": "and",
+        "args": [
+          {
+            "op": "has",
+            "args": [{ "$ctx": "components.0.props" }, "icon"]
+          },
+          {
+            "op": "has",
+            "args": [{ "$ctx": "components.1.props" }, "icon"]
+          },
+          {
+            "op": "has",
+            "args": [{ "$ctx": "components.2.props" }, "icon"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "feature-titles-length",
+      "level": "warn",
+      "rule": {
+        "op": "and",
+        "args": [
+          {
+            "op": "<=",
+            "args": [{ "$ctx": "components.0.props.title.length" }, 30]
+          },
+          {
+            "op": "<=",
+            "args": [{ "$ctx": "components.1.props.title.length" }, 30]
+          },
+          {
+            "op": "<=",
+            "args": [{ "$ctx": "components.2.props.title.length" }, 30]
+          }
+        ]
+      }
+    }
+  ]
+}

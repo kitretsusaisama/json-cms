@@ -1,0 +1,100 @@
+{
+  "Hero": {
+    "description": "Large hero section with heading, subheading, image, and CTA",
+    "props": ["heading", "subheading", "image", "cta", "layout", "imagePosition"],
+    "slots": [],
+    "weight": 4,
+    "category": "marketing"
+  },
+  "Grid": {
+    "description": "Responsive grid layout container",
+    "props": ["cols", "gap", "className"],
+    "slots": ["items"],
+    "weight": 2,
+    "category": "layout"
+  },
+  "FeatureCard": {
+    "description": "Card component for displaying features with icon and text",
+    "props": ["icon", "title", "description", "variant"],
+    "slots": [],
+    "weight": 2,
+    "category": "content"
+  },
+  "CTA": {
+    "description": "Call-to-action section with buttons",
+    "props": ["heading", "description", "primaryButton", "secondaryButton", "background", "className"],
+    "slots": [],
+    "weight": 3,
+    "category": "marketing"
+  },
+  "SEO": {
+    "description": "SEO meta tags and structured data",
+    "props": ["title", "description", "ogImage", "keywords", "canonicalUrl"],
+    "slots": [],
+    "weight": 0,
+    "category": "meta"
+  },
+  "AnnouncementBar": {
+    "description": "Top banner for announcements",
+    "props": ["text", "variant", "dismissible", "href"],
+    "slots": [],
+    "weight": 1,
+    "category": "notification"
+  },
+  "RichText": {
+    "description": "Rich text content with markdown support",
+    "props": ["content", "markdown", "allowHtml"],
+    "slots": [],
+    "weight": 1,
+    "category": "content"
+  },
+  "ProductGrid": {
+    "description": "Grid of products with filtering and sorting",
+    "props": ["limit", "collection", "category", "sortBy"],
+    "slots": [],
+    "weight": 3,
+    "category": "ecommerce"
+  },
+  "FAQ": {
+    "description": "Frequently asked questions component",
+    "props": ["items", "title"],
+    "slots": [],
+    "weight": 2,
+    "category": "content"
+  },
+  "Newsletter": {
+    "description": "Newsletter signup form",
+    "props": ["title", "description", "placeholder"],
+    "slots": [],
+    "weight": 1,
+    "category": "marketing"
+  },
+  "TagList": {
+    "description": "List of tags or categories",
+    "props": ["tags", "variant", "size"],
+    "slots": [],
+    "weight": 1,
+    "category": "navigation"
+  },
+  "Card": {
+    "description": "Generic card component",
+    "props": ["title", "content", "image", "href"],
+    "slots": ["content"],
+    "weight": 2,
+    "category": "content"
+  },
+  "TextBlock": {
+    "description": "Text content with optional formatting",
+    "props": ["content", "variant", "align"],
+    "slots": [],
+    "weight": 1,
+    "category": "content"
+  },
+  "Button": {
+    "description": "Interactive button component",
+    "props": ["text", "href", "variant", "size", "disabled"],
+    "slots": [],
+    "weight": 1,
+    "category": "interactive"
+  }
+}

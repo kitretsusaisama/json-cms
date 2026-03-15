@@ -1,0 +1,70 @@
+name: Release Packages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+          registry-url: https://registry.npmjs.org
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
+
+      - name: Validate publishable manifests
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: check:no-file-deps
+
+      - name: Validate publish materials
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: check:publish-materials
+
+      - name: Build Wave 1 publishables
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: build:wave1
+
+      - name: Run Wave 1 test suite
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: test:wave1
+
+      - name: Verify package tarballs
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: pack:verify
+
+      - name: Version or publish packages
+        uses: changesets/action@v1
+        with:
+          version: pnpm run release:version
+          publish: pnpm run release:publish
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,65 @@
+{
+  "id": "_defaults",
+  "type": "article",
+  "title": "{{title}} | Albata Blog",
+  "description": "{{excerpt || 'Read our latest article: ' + title}}",
+  "canonical": "https://albata.com/blog/{{slug}}",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com/blog/{{slug}}",
+    "es": "https://albata.com/es/blog/{{slug}}"
+  },
+  "openGraph": {
+    "type": "article",
+    "title": "{{title}}",
+    "description": "{{excerpt || 'Read our latest article'}}",
+    "url": "https://albata.com/blog/{{slug}}",
+    "images": [
+      {
+        "url": "{{imageUrl || 'https://albata.com/images/blog/{{slug}}.jpg'}}",
+        "width": 1200,
+        "height": 630,
+        "alt": "{{title}}"
+      }
+    ],
+    "article": {
+      "publishedTime": "{{publishedAt}}",
+      "modifiedTime": "{{updatedAt || publishedAt}}",
+      "authors": ["{{authorName || 'Albata Team'}}"],
+      "tags": "{{tags || ''}}"
+    },
+    "siteName": "Albata Blog"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "{{title}}",
+    "description": "{{excerpt || 'Read our latest article'}}",
+    "image": "{{imageUrl || 'https://albata.com/images/blog/{{slug}}.jpg'}}"
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "{{tags || ''}}"
+    },
+    {
+      "name": "article:published_time",
+      "content": "{{publishedAt}}"
+    },
+    {
+      "name": "article:modified_time",
+      "content": "{{updatedAt || publishedAt}}"
+    },
+    {
+      "name": "article:author",
+      "content": "{{authorName || 'Albata Team'}}"
+    },
+    {
+      "name": "article:section",
+      "content": "{{category || 'General'}}"
+    },
+    {
+      "name": "article:tag",
+      "content": "{{tags || ''}}"
+    }
+  ]
+}

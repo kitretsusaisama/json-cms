@@ -1,0 +1,132 @@
+{
+  "id": "home",
+  "title": "Welcome to Albata",
+  "prepend": [
+    {
+      "id": "seo-meta",
+      "key": "SEO",
+      "props": {
+        "title": "Albata - Modern Web Platform",
+        "description": "Modern Web Platform with Advanced SEO & Security",
+        "ogImage": "https://albata.com/images/hero-bg.jpg"
+      }
+    },
+    {
+      "id": "hero-1",
+      "key": "Hero",
+      "props": {
+        "heading": "Welcome to Albata",
+        "subheading": "Modern Web Platform with Advanced SEO & Security",
+        "image": {
+          "src": "https://albata.com/images/hero-bg.jpg",
+          "alt": "Albata Platform Hero"
+        },
+        "cta": {
+          "text": "Get Started",
+          "href": "/docs"
+        }
+      },
+      "weight": 4
+    },
+    {
+      "id": "features-1",
+      "key": "RichText",
+      "props": {
+        "content": "# Why Choose Albata?\n\n- **SEO Optimized**: Entity-based SEO with structured data\n- **JSON Pages**: Component-driven page design\n- **Security First**: Advanced security headers and validation\n- **Developer Friendly**: TypeScript, Zod validation, and DX tools"
+      },
+      "weight": 2
+    },
+    {
+      "id": "product-grid-1",
+      "key": "ProductGrid",
+      "props": {
+        "limit": 1,
+        "collection": "featured",
+        "sortBy": "date"
+      },
+      "weight": 3
+    },
+    {
+      "id": "cta-1",
+      "key": "CTA",
+      "props": {
+        "heading": "Ready to Get Started?",
+        "description": "Explore our products and see what Albata can do for you.",
+        "primaryButton": {
+          "text": "Explore Products",
+          "href": "/products",
+          "variant": "primary"
+        }
+      },
+      "weight": 2
+    },
+    {
+      "id": "faq-1",
+      "key": "FAQ",
+      "props": {
+        "items": [
+          {
+            "q": "What is entity-based SEO?",
+            "a": "Entity-based SEO focuses on topics and concepts rather than just keywords, helping search engines understand the context and relationships between different entities."
+          },
+          {
+            "q": "How does JSON page design work?",
+            "a": "Pages are defined as JSON files that specify component order and props, which are then rendered by a safe component registry with validation."
+          },
+          {
+            "q": "Is Albata secure?",
+            "a": "Yes, Albata includes advanced security features like CSP headers, rate limiting, input validation, and audit logging."
+          }
+        ]
+      },
+      "weight": 2
+    },
+    {
+      "id": "newsletter-1",
+      "key": "Newsletter",
+      "props": {
+        "title": "Stay Updated",
+        "description": "Get the latest updates about Albata features and improvements.",
+        "placeholder": "Enter your email address"
+      },
+      "weight": 1
+    }
+  ],
+  "constraints": [
+    {
+      "id": "fold-budget",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "metrics.foldWeight" },
+          12
+        ]
+      }
+    },
+    {
+      "id": "hero-first",
+      "rule": {
+        "op": "==",
+        "args": [
+          { "$ctx": "components.0.key" },
+          "Hero"
+        ]
+      }
+    },
+    {
+      "id": "seo-title-length",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "metrics.seo.titleLength" },
+          60
+        ]
+      },
+      "level": "warn"
+    }
+  ],
+  "context": {
+    "device": "desktop",
+    "locale": "en"
+  }
+}

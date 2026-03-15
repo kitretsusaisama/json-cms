@@ -1,0 +1,12 @@
+{
+  "id": "home",
+  "title": "Home",
+  "blocks": [],
+  "prepend": [],
+  "append": [],
+  "constraints": [],
+  "seo": {
+    "title": "Home | __PROJECT_TITLE__",
+    "description": "Welcome to your Remix project powered by @upflame/json-cms."
+  }
+}

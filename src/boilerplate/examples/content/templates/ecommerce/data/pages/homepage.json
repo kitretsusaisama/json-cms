@@ -1,0 +1,171 @@
+{
+  "id": "ecommerce-homepage",
+  "title": "Welcome to Our Store - Premium Products & Fast Shipping",
+  "blocks": [
+    "hero.ecommerce",
+    "featured-products",
+    "categories.showcase",
+    "testimonials.customers",
+    "benefits.shipping",
+    "newsletter.signup"
+  ],
+  "prepend": [
+    {
+      "id": "promo-banner",
+      "key": "PromoBanner",
+      "props": {
+        "message": "Free shipping on orders over $50! Use code FREESHIP",
+        "link": {
+          "text": "Shop Now",
+          "href": "/products"
+        },
+        "variant": "success",
+        "dismissible": true
+      },
+      "conditions": [
+        {
+          "when": {
+            "op": "and",
+            "args": [
+              {
+                "op": "has",
+                "args": [{ "$ctx": "promotions" }, "freeShipping"]
+              },
+              {
+                "op": "==",
+                "args": [{ "$ctx": "promotions.freeShipping.active" }, true]
+              }
+            ]
+          }
+        }
+      ],
+      "weight": 1,
+      "analytics": {
+        "id": "promo-banner",
+        "tags": ["promotion", "conversion", "shipping"]
+      }
+    }
+  ],
+  "append": [
+    {
+      "id": "trust-badges",
+      "key": "TrustBadges",
+      "props": {
+        "badges": [
+          {
+            "icon": "/images/badges/secure-checkout.svg",
+            "title": "Secure Checkout",
+            "description": "SSL encrypted payments"
+          },
+          {
+            "icon": "/images/badges/money-back.svg",
+            "title": "30-Day Returns",
+            "description": "Money back guarantee"
+          },
+          {
+            "icon": "/images/badges/fast-shipping.svg",
+            "title": "Fast Shipping",
+            "description": "2-3 day delivery"
+          },
+          {
+            "icon": "/images/badges/customer-support.svg",
+            "title": "24/7 Support",
+            "description": "Expert customer service"
+          }
+        ],
+        "layout": "horizontal",
+        "className": "py-12 bg-gray-50"
+      },
+      "weight": 1,
+      "analytics": {
+        "id": "trust-badges",
+        "tags": ["trust", "conversion", "footer"]
+      }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "hero-first",
+      "rule": {
+        "op": "==",
+        "args": [
+          { "$ctx": "blocks.0" },
+          "hero.ecommerce"
+        ]
+      }
+    },
+    {
+      "id": "featured-products-early",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "blocks.indexOf('featured-products')" },
+          2
+        ]
+      }
+    },
+    {
+      "id": "newsletter-last",
+      "rule": {
+        "op": "==",
+        "args": [
+          { "$ctx": "blocks.-1" },
+          "newsletter.signup"
+        ]
+      }
+    },
+    {
+      "id": "max-blocks-performance",
+      "level": "warn",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "blocks.length" },
+          8
+        ]
+      }
+    }
+  ],
+  "context": {
+    "page": "homepage",
+    "section": "ecommerce",
+    "audience": "shoppers",
+    "intent": "browse-and-purchase",
+    "funnel": "awareness"
+  },
+  "seo": {
+    "title": "Premium Products & Fast Shipping | Your Store Name",
+    "description": "Discover our curated collection of premium products with fast, free shipping. Shop now and enjoy 30-day returns and 24/7 customer support.",
+    "keywords": ["premium products", "fast shipping", "online shopping", "quality goods"],
+    "canonical": "/",
+    "openGraph": {
+      "title": "Premium Products & Fast Shipping",
+      "description": "Discover our curated collection of premium products with fast, free shipping.",
+      "image": "/images/og/homepage.jpg",
+      "type": "website"
+    },
+    "structuredData": [
+      {
+        "@type": "WebSite",
+        "name": "Your Store Name",
+        "url": "https://yourstore.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://yourstore.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Organization",
+        "name": "Your Store Name",
+        "url": "https://yourstore.com",
+        "logo": "https://yourstore.com/images/logo.png",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+1-555-123-4567",
+          "contactType": "customer service"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "templates": [
+    { "id": "welcome", "subject": "Welcome to Albata", "text": "Thanks for joining!" }
+  ]
+}

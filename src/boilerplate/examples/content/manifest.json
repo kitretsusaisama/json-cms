@@ -1,0 +1,307 @@
+{
+  "version": "1.0.0",
+  "name": "JSON CMS Boilerplate Examples",
+  "description": "Comprehensive example content and templates for the JSON CMS Boilerplate system",
+  "author": "JSON CMS Team",
+  "license": "MIT",
+  "created": "2024-01-15T10:00:00Z",
+  "updated": "2024-01-15T10:00:00Z",
+  
+  "examples": {
+    "pages": {
+      "homepage": {
+        "path": "pages/homepage.json",
+        "description": "Complete homepage example with hero, features, testimonials, and CTA",
+        "features": ["hero-section", "feature-grid", "testimonials", "newsletter-signup"],
+        "complexity": "intermediate",
+        "tags": ["marketing", "conversion", "homepage"]
+      },
+      "product-detail": {
+        "path": "pages/product-detail.json",
+        "description": "E-commerce product detail page with gallery, specs, and reviews",
+        "features": ["product-gallery", "specifications", "reviews", "related-products"],
+        "complexity": "advanced",
+        "tags": ["ecommerce", "product", "conversion"]
+      },
+      "blog-post": {
+        "path": "pages/blog-post.json",
+        "description": "Blog post page with reading progress, social sharing, and comments",
+        "features": ["reading-progress", "social-sharing", "comments", "related-articles"],
+        "complexity": "intermediate",
+        "tags": ["blog", "content", "engagement"]
+      }
+    },
+    
+    "blocks": {
+      "hero-homepage": {
+        "path": "blocks/hero-homepage.json",
+        "description": "Responsive hero block with multiple variants and constraints",
+        "features": ["responsive-variants", "constraint-validation", "analytics-tracking"],
+        "complexity": "advanced",
+        "tags": ["hero", "responsive", "conversion"]
+      },
+      "features-overview": {
+        "path": "blocks/features-overview.json",
+        "description": "Feature grid with conditional rendering and device-specific layouts",
+        "features": ["conditional-rendering", "device-targeting", "grid-layout"],
+        "complexity": "intermediate",
+        "tags": ["features", "grid", "responsive"]
+      },
+      "testimonials-featured": {
+        "path": "blocks/testimonials-featured.json",
+        "description": "Testimonial carousel with rating system and social proof",
+        "features": ["carousel-layout", "rating-system", "social-proof"],
+        "complexity": "intermediate",
+        "tags": ["testimonials", "social-proof", "carousel"]
+      }
+    },
+    
+    "plugins": {
+      "ecommerce-plugin": {
+        "path": "plugins/ecommerce-plugin/",
+        "description": "Complete e-commerce plugin with products, cart, and payment processing",
+        "features": ["product-management", "shopping-cart", "payment-processing", "order-management"],
+        "complexity": "advanced",
+        "tags": ["ecommerce", "payments", "products", "orders"],
+        "dependencies": ["stripe", "react", "next"],
+        "apiEndpoints": [
+          "/api/ecommerce/products",
+          "/api/ecommerce/cart",
+          "/api/ecommerce/orders"
+        ],
+        "components": [
+          "ProductCard",
+          "ProductGrid",
+          "ShoppingCart",
+          "PriceDisplay",
+          "ProductFilters"
+        ]
+      }
+    },
+    
+    "integrations": {
+      "nextauth": {
+        "path": "integrations/nextauth/setup.ts",
+        "description": "Complete NextAuth.js setup with multiple providers and RBAC",
+        "features": ["multi-provider-auth", "rbac", "session-management", "tenant-resolution"],
+        "complexity": "advanced",
+        "tags": ["authentication", "nextauth", "rbac", "multi-tenant"],
+        "providers": ["google", "github", "email"],
+        "dependencies": ["next-auth", "@next-auth/prisma-adapter"]
+      },
+      "stripe-payments": {
+        "path": "integrations/stripe/payment-integration.ts",
+        "description": "Stripe payment processing with subscriptions and webhooks",
+        "features": ["payment-intents", "subscriptions", "webhooks", "customer-management"],
+        "complexity": "advanced",
+        "tags": ["payments", "stripe", "subscriptions", "webhooks"],
+        "dependencies": ["stripe", "@stripe/stripe-js"]
+      }
+    },
+    
+    "templates": {
+      "ecommerce": {
+        "path": "templates/ecommerce/",
+        "description": "Complete e-commerce template with product catalog and checkout",
+        "features": [
+          "product-catalog",
+          "shopping-cart",
+          "checkout-flow",
+          "order-management",
+          "payment-processing",
+          "inventory-tracking",
+          "customer-accounts",
+          "seo-optimization"
+        ],
+        "complexity": "advanced",
+        "tags": ["ecommerce", "template", "complete-solution"],
+        "pages": [
+          "homepage",
+          "product-listing",
+          "product-detail",
+          "shopping-cart",
+          "checkout",
+          "account-pages"
+        ],
+        "integrations": ["stripe", "email", "analytics"],
+        "estimatedSetupTime": "2-4 hours"
+      },
+      "blog": {
+        "path": "templates/blog/",
+        "description": "Modern blog template with content management and SEO",
+        "features": [
+          "article-system",
+          "author-profiles",
+          "category-organization",
+          "search-functionality",
+          "seo-optimization",
+          "newsletter-integration",
+          "comment-system",
+          "social-sharing"
+        ],
+        "complexity": "intermediate",
+        "tags": ["blog", "template", "content-management"],
+        "pages": [
+          "homepage",
+          "blog-index",
+          "article-detail",
+          "category-pages",
+          "author-pages",
+          "search-results"
+        ],
+        "integrations": ["email", "analytics", "comments"],
+        "estimatedSetupTime": "1-2 hours"
+      }
+    }
+  },
+  
+  "categories": {
+    "pages": {
+      "name": "Page Examples",
+      "description": "Complete page definitions showing best practices",
+      "count": 3
+    },
+    "blocks": {
+      "name": "Block Examples",
+      "description": "Reusable content blocks with variants and constraints",
+      "count": 3
+    },
+    "plugins": {
+      "name": "Plugin Examples",
+      "description": "Complete plugin implementations with components and APIs",
+      "count": 1
+    },
+    "integrations": {
+      "name": "Integration Examples",
+      "description": "Third-party service integration patterns",
+      "count": 2
+    },
+    "templates": {
+      "name": "Project Templates",
+      "description": "Complete project templates for different use cases",
+      "count": 2
+    }
+  },
+  
+  "complexity": {
+    "beginner": {
+      "description": "Simple examples suitable for getting started",
+      "examples": []
+    },
+    "intermediate": {
+      "description": "Examples with moderate complexity and multiple features",
+      "examples": [
+        "pages/homepage",
+        "pages/blog-post",
+        "blocks/features-overview",
+        "blocks/testimonials-featured",
+        "templates/blog"
+      ]
+    },
+    "advanced": {
+      "description": "Complex examples with multiple integrations and advanced features",
+      "examples": [
+        "pages/product-detail",
+        "blocks/hero-homepage",
+        "plugins/ecommerce-plugin",
+        "integrations/nextauth",
+        "integrations/stripe-payments",
+        "templates/ecommerce"
+      ]
+    }
+  },
+  
+  "tags": {
+    "ecommerce": {
+      "description": "E-commerce related examples and features",
+      "count": 4
+    },
+    "blog": {
+      "description": "Blog and content management examples",
+      "count": 2
+    },
+    "authentication": {
+      "description": "User authentication and authorization examples",
+      "count": 1
+    },
+    "payments": {
+      "description": "Payment processing and subscription examples",
+      "count": 2
+    },
+    "responsive": {
+      "description": "Responsive design and mobile optimization examples",
+      "count": 2
+    },
+    "conversion": {
+      "description": "Conversion optimization and marketing examples",
+      "count": 3
+    },
+    "seo": {
+      "description": "SEO optimization and structured data examples",
+      "count": 2
+    }
+  },
+  
+  "dependencies": {
+    "required": [
+      "react",
+      "next",
+      "zod"
+    ],
+    "optional": {
+      "stripe": {
+        "description": "Payment processing functionality",
+        "examples": ["ecommerce-plugin", "stripe-payments", "ecommerce-template"]
+      },
+      "next-auth": {
+        "description": "Authentication and session management",
+        "examples": ["nextauth-integration"]
+      },
+      "@tailwindcss/typography": {
+        "description": "Enhanced typography for blog content",
+        "examples": ["blog-template"]
+      }
+    }
+  },
+  
+  "usage": {
+    "quickStart": {
+      "description": "Get started quickly with basic examples",
+      "recommended": [
+        "pages/homepage",
+        "blocks/hero-homepage",
+        "integrations/nextauth"
+      ]
+    },
+    "ecommerce": {
+      "description": "Build an e-commerce site",
+      "recommended": [
+        "templates/ecommerce",
+        "plugins/ecommerce-plugin",
+        "integrations/stripe-payments"
+      ]
+    },
+    "blog": {
+      "description": "Create a blog or content site",
+      "recommended": [
+        "templates/blog",
+        "pages/blog-post",
+        "blocks/testimonials-featured"
+      ]
+    },
+    "customization": {
+      "description": "Learn advanced customization techniques",
+      "recommended": [
+        "blocks/hero-homepage",
+        "plugins/ecommerce-plugin",
+        "pages/product-detail"
+      ]
+    }
+  },
+  
+  "validation": {
+    "schema": "https://json-cms.dev/schemas/examples-manifest.json",
+    "lastValidated": "2024-01-15T10:00:00Z",
+    "status": "valid"
+  }
+}

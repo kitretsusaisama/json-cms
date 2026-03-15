@@ -1,0 +1,136 @@
+import { execSync } from "child_process";
+import { readFile, writeFile } from "fs/promises";
+import path from "path";
+import { detectPackageManager } from "@upflame/cli-utils";
+import { LEGACY_CONFIG_FILE, resolveConfigPath } from "@upflame/installer-core";
+
+export interface AddPluginOptions {
+  packageManager?: "npm" | "pnpm" | "yarn" | "bun";
+  configPath?: string;
+  installDependencies?: boolean;
+}
+
+function normalizePluginName(input: string): string {
+  if (input.startsWith("@")) {
+    return input;
+  }
+  if (input.includes("/")) {
+    return input;
+  }
+  return `@upflame/${input}`;
+}
+
+function toImportIdentifier(pkgName: string): string {
+  const base = pkgName.split("/").pop() ?? pkgName;
+  const cleaned = base.replace(/[^a-zA-Z0-9]+/g, " ").trim();
+  if (!cleaned) {
+    return "plugin";
+  }
+  const parts = cleaned.split(/\s+/);
+  const [first, ...rest] = parts;
+  const camel = [
+    first.charAt(0).toLowerCase() + first.slice(1),
+    ...rest.map((part) => part.charAt(0).toUpperCase() + part.slice(1)),
+  ].join("");
+  return camel || "plugin";
+}
+
+function installCommand(pm: AddPluginOptions["packageManager"], pkg: string): string {
+  switch (pm) {
+    case "pnpm":
+      return `pnpm add ${pkg}`;
+    case "yarn":
+      return `yarn add ${pkg}`;
+    case "bun":
+      return `bun add ${pkg}`;
+    default:
+      return `npm install ${pkg}`;
+  }
+}
+
+function upsertPluginImport(source: string, importName: string, pkgName: string): string {
+  if (source.includes(`from \"${pkgName}\"`) || source.includes(`from '${pkgName}'`)) {
+    return source;
+  }
+
+  const importLine = `import ${importName} from "${pkgName}";`;
+  const importBlockMatch = source.match(/^(?:import .*;\r?\n)+/);
+
+  if (importBlockMatch?.index === 0) {
+    const block = importBlockMatch[0];
+    return source.replace(block, `${block.trimEnd()}\r\n${importLine}\r\n\r\n`);
+  }
+
+  return `${importLine}\r\n\r\n${source}`;
+}
+
+function upsertPluginArray(source: string, importName: string): string {
+  const pluginArrayRegex = /plugins\s*:\s*\[([\s\S]*?)\]/m;
+  const match = source.match(pluginArrayRegex);
+  if (!match) {
+    throw new Error("Could not find plugins array in config file.");
+  }
+
+  const items = match[1].trim();
+  if (items.includes(importName)) {
+    return source;
+  }
+
+  const nextItems = items.length === 0 ? importName : `${items.replace(/\s*$/, "")}, ${importName}`;
+  return source.replace(pluginArrayRegex, `plugins: [${nextItems}]`);
+}
+
+export async function addPluginToProject(pluginInput: string, options: AddPluginOptions = {}): Promise<void> {
+  const cwd = process.cwd();
+  const packageManager = options.packageManager ?? await detectPackageManager(cwd);
+  const pluginName = normalizePluginName(pluginInput);
+  const resolvedConfig = await resolveConfigPath(cwd, options.configPath);
+  const configPath = resolvedConfig.path;
+  const importName = toImportIdentifier(pluginName);
+
+  if (resolvedConfig.source === "legacy") {
+    console.warn(`Warning: ${LEGACY_CONFIG_FILE} is deprecated. Please migrate to cms.config.ts.`);
+  }
+
+  if (options.installDependencies ?? true) {
+    execSync(installCommand(packageManager, pluginName), { stdio: "inherit", cwd });
+  }
+
+  const configSource = await readFile(configPath, "utf-8");
+  let updated = upsertPluginImport(configSource, importName, pluginName);
+  updated = upsertPluginArray(updated, importName);
+
+  await writeFile(configPath, updated, "utf-8");
+  console.log(`\nAdded ${pluginName} to ${path.basename(configPath)}.`);
+}
+
+export function parseAddPluginArgs(argv: string[]): { plugin?: string; options: AddPluginOptions } {
+  const options: AddPluginOptions = {};
+  let plugin: string | undefined;
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const value = argv[index];
+    if (!value.startsWith("--") && !plugin) {
+      plugin = value;
+      continue;
+    }
+
+    switch (value) {
+      case "--package-manager":
+        options.packageManager = argv[index + 1] as AddPluginOptions["packageManager"];
+        index += 1;
+        break;
+      case "--config":
+        options.configPath = argv[index + 1];
+        index += 1;
+        break;
+      case "--no-install":
+        options.installDependencies = false;
+        break;
+      default:
+        break;
+    }
+  }
+
+  return { plugin, options };
+}

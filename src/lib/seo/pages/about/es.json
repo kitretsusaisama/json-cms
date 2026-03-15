@@ -1,0 +1,50 @@
+{
+  "title": "Acerca de Albata - Nuestra Misión y Visión",
+  "description": "Conozca Albata, nuestra misión, visión y el equipo detrás de esta innovadora aplicación web.",
+  "keywords": ["acerca de Albata", "misión", "visión", "equipo", "empresa"],
+  "openGraph": {
+    "title": "Acerca de Albata - Nuestra Misión y Visión",
+    "description": "Conozca Albata, nuestra misión, visión y el equipo detrás de esta innovadora aplicación web.",
+    "type": "website",
+    "images": [
+      {
+        "url": "/images/about-og-image.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Acerca de Albata"
+      }
+    ],
+    "locale": "es_ES"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "Acerca de Albata - Nuestra Misión y Visión",
+    "description": "Conozca Albata, nuestra misión, visión y el equipo detrás de esta innovadora aplicación web.",
+    "image": "/images/about-twitter-image.jpg",
+    "imageAlt": "Acerca de Albata"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Albata",
+    "url": "https://albata.example.com/es",
+    "logo": "https://albata.example.com/images/logo.png",
+    "description": "Albata es una aplicación web moderna con soporte multilingüe y características avanzadas.",
+    "foundingDate": "2023",
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Nombre del Fundador"
+      }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Calle Principal",
+      "addressLocality": "Ciudad",
+      "addressRegion": "Estado",
+      "postalCode": "12345",
+      "addressCountry": "País"
+    }
+  },
+  "integrityToken": "e5d4c3b2a1f0"
+}

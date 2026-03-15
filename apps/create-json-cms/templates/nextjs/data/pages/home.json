@@ -1,0 +1,9 @@
+{
+  "id": "home",
+  "title": "__PROJECT_TITLE__",
+  "blocks": [],
+  "seo": {
+    "title": "__PROJECT_TITLE__",
+    "description": "Generated with create-json-cms"
+  }
+}

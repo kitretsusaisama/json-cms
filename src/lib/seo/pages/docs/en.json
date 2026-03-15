@@ -1,0 +1,51 @@
+{
+  "title": "Albata Documentation - Guides and References",
+  "description": "Comprehensive documentation for Albata, including guides, API references, and examples to help you get started.",
+  "keywords": ["Albata documentation", "guides", "API reference", "examples", "tutorials"],
+  "openGraph": {
+    "title": "Albata Documentation - Guides and References",
+    "description": "Comprehensive documentation for Albata, including guides, API references, and examples to help you get started.",
+    "type": "website",
+    "images": [
+      {
+        "url": "/images/docs-og-image.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Albata Documentation"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "Albata Documentation - Guides and References",
+    "description": "Comprehensive documentation for Albata, including guides, API references, and examples to help you get started.",
+    "image": "/images/docs-twitter-image.jpg",
+    "imageAlt": "Albata Documentation"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Albata Documentation",
+    "description": "Comprehensive documentation for Albata, including guides, API references, and examples.",
+    "keywords": "Albata, documentation, guides, API, reference, examples, tutorials",
+    "author": {
+      "@type": "Organization",
+      "name": "Albata Team",
+      "url": "https://albata.example.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Albata",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://albata.example.com/images/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://albata.example.com/docs"
+    },
+    "articleSection": "Documentation"
+  },
+  "integrityToken": "d3c2b1a0f9e8"
+}

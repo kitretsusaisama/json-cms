@@ -1,0 +1,51 @@
+{
+  "title": "Contact Albata - Get in Touch With Our Team",
+  "description": "Contact the Albata team for inquiries, support, or partnership opportunities. We're here to help!",
+  "keywords": ["contact Albata", "support", "inquiries", "help", "get in touch"],
+  "openGraph": {
+    "title": "Contact Albata - Get in Touch With Our Team",
+    "description": "Contact the Albata team for inquiries, support, or partnership opportunities. We're here to help!",
+    "type": "website",
+    "images": [
+      {
+        "url": "/images/contact-og-image.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Contact Albata"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "Contact Albata - Get in Touch With Our Team",
+    "description": "Contact the Albata team for inquiries, support, or partnership opportunities. We're here to help!",
+    "image": "/images/contact-twitter-image.jpg",
+    "imageAlt": "Contact Albata"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Albata",
+    "description": "Contact the Albata team for inquiries, support, or partnership opportunities.",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Albata",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-123-456-7890",
+        "contactType": "customer service",
+        "email": "contact@albata.example.com",
+        "availableLanguage": ["English", "Spanish", "French", "German", "Chinese"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Main St",
+        "addressLocality": "City",
+        "addressRegion": "State",
+        "postalCode": "12345",
+        "addressCountry": "Country"
+      }
+    }
+  },
+  "integrityToken": "b9c8d7e6f5a4"
+}

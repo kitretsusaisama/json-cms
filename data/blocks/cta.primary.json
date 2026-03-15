@@ -1,0 +1,30 @@
+{
+  "id": "cta.primary",
+  "tree": [
+    {
+      "id": "cta-section",
+      "key": "CTA",
+      "props": {
+        "heading": { "$i18n": "cta.heading" },
+        "description": { "$i18n": "cta.description" },
+        "primaryButton": {
+          "text": { "$i18n": "cta.primary" },
+          "href": "/signup",
+          "variant": "primary"
+        },
+        "secondaryButton": {
+          "text": { "$i18n": "cta.secondary" },
+          "href": "/demo",
+          "variant": "secondary"
+        },
+        "background": "token:color.bg.accent",
+        "className": "py-20"
+      },
+      "weight": 2,
+      "analytics": {
+        "id": "primary-cta",
+        "tags": ["conversion", "signup"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "name": "ecommerce-plugin",
+  "version": "1.0.0",
+  "description": "E-commerce components and functionality for the JSON CMS",
+  "author": "JSON CMS Team",
+  "license": "MIT",
+  "keywords": ["ecommerce", "shopping", "products", "cart"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/json-cms/ecommerce-plugin"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "next": "^14.0.0",
+    "zod": "^3.22.0"
+  },
+  "peerDependencies": {
+    "@json-cms/core": "^1.0.0"
+  },
+  "components": [
+    {
+      "key": "ProductCard",
+      "name": "Product Card",
+      "description": "Display product information with image, title, price, and actions",
+      "category": "ecommerce",
+      "file": "./components/ProductCard.tsx",
+      "schema": "./schemas/ProductCard.json",
+      "preview": "./previews/ProductCard.png"
+    },
+    {
+      "key": "ProductGrid",
+      "name": "Product Grid",
+      "description": "Grid layout for displaying multiple products",
+      "category": "ecommerce",
+      "file": "./components/ProductGrid.tsx",
+      "schema": "./schemas/ProductGrid.json",
+      "preview": "./previews/ProductGrid.png"
+    },
+    {
+      "key": "ShoppingCart",
+      "name": "Shopping Cart",
+      "description": "Shopping cart widget with item management",
+      "category": "ecommerce",
+      "file": "./components/ShoppingCart.tsx",
+      "schema": "./schemas/ShoppingCart.json",
+      "preview": "./previews/ShoppingCart.png"
+    },
+    {
+      "key": "PriceDisplay",
+      "name": "Price Display",
+      "description": "Formatted price display with currency and discounts",
+      "category": "ecommerce",
+      "file": "./components/PriceDisplay.tsx",
+      "schema": "./schemas/PriceDisplay.json",
+      "preview": "./previews/PriceDisplay.png"
+    },
+    {
+      "key": "ProductFilters",
+      "name": "Product Filters",
+      "description": "Filter and search interface for products",
+      "category": "ecommerce",
+      "file": "./components/ProductFilters.tsx",
+      "schema": "./schemas/ProductFilters.json",
+      "preview": "./previews/ProductFilters.png"
+    }
+  ],
+  "routes": [
+    {
+      "path": "/api/ecommerce/products",
+      "method": "GET",
+      "handler": "./api/products.ts",
+      "description": "Get products with filtering and pagination"
+    },
+    {
+      "path": "/api/ecommerce/products/:id",
+      "method": "GET",
+      "handler": "./api/products/[id].ts",
+      "description": "Get single product by ID"
+    },
+    {
+      "path": "/api/ecommerce/cart",
+      "method": "GET",
+      "handler": "./api/cart.ts",
+      "description": "Get cart contents"
+    },
+    {
+      "path": "/api/ecommerce/cart",
+      "method": "POST",
+      "handler": "./api/cart.ts",
+      "description": "Add item to cart"
+    },
+    {
+      "path": "/api/ecommerce/cart/:id",
+      "method": "DELETE",
+      "handler": "./api/cart/[id].ts",
+      "description": "Remove item from cart"
+    }
+  ],
+  "hooks": [
+    {
+      "name": "before-product-render",
+      "description": "Called before rendering product components",
+      "handler": "./hooks/before-product-render.ts"
+    },
+    {
+      "name": "after-cart-update",
+      "description": "Called after cart is updated",
+      "handler": "./hooks/after-cart-update.ts"
+    }
+  ],
+  "migrations": [
+    {
+      "version": "1.0.0",
+      "description": "Initial e-commerce tables",
+      "file": "./migrations/001-initial.sql"
+    }
+  ],
+  "config": {
+    "schema": "./config/schema.json",
+    "defaults": {
+      "currency": "USD",
+      "taxRate": 0.08,
+      "shippingEnabled": true,
+      "inventoryTracking": true,
+      "maxCartItems": 100
+    }
+  },
+  "permissions": [
+    "ecommerce:products:read",
+    "ecommerce:products:write",
+    "ecommerce:cart:read",
+    "ecommerce:cart:write",
+    "ecommerce:orders:read",
+    "ecommerce:orders:write"
+  ],
+  "assets": [
+    {
+      "type": "css",
+      "file": "./styles/ecommerce.css",
+      "description": "E-commerce component styles"
+    },
+    {
+      "type": "js",
+      "file": "./scripts/cart-utils.js",
+      "description": "Client-side cart utilities"
+    }
+  ],
+  "documentation": {
+    "readme": "./README.md",
+    "changelog": "./CHANGELOG.md",
+    "examples": "./examples/",
+    "api": "./docs/api.md"
+  }
+}

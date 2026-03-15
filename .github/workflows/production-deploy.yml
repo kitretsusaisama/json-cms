@@ -1,0 +1,309 @@
+name: Production Deployment
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+  release:
+    types: [published]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # Security and Quality Checks
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # Code Quality & Testing
+  test:
+    name: Test & Quality
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: albata_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      
+      redis:
+        image: redis:7-alpine
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: lint
+
+      - name: Run type checking
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: typecheck
+
+      - name: Run unit tests
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: test
+        env:
+          DATABASE_URL: postgresql://postgres:test@localhost:5432/albata_test
+          REDIS_URL: redis://localhost:6379
+
+      - name: Run E2E tests
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: test:e2e
+        env:
+          DATABASE_URL: postgresql://postgres:test@localhost:5432/albata_test
+          REDIS_URL: redis://localhost:6379
+
+      - name: Build application
+        uses: ./.github/actions/run-validated-npm-script
+        with:
+          script: build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://albata.com
+          NEXT_TELEMETRY_DISABLED: 1
+
+      - name: Run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.12.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  # Build and Push Docker Image
+  build:
+    name: Build & Push Image
+    runs-on: ubuntu-latest
+    needs: [security-scan, test]
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.image.outputs.image }}
+      digest: ${{ steps.build.outputs.digest }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }}
+            NEXT_PUBLIC_GA_ID=${{ vars.NEXT_PUBLIC_GA_ID }}
+            NEXT_PUBLIC_GTM_ID=${{ vars.NEXT_PUBLIC_GTM_ID }}
+            SENTRY_DSN=${{ secrets.SENTRY_DSN }}
+            SENTRY_ORG=${{ vars.SENTRY_ORG }}
+            SENTRY_PROJECT=${{ vars.SENTRY_PROJECT }}
+
+      - name: Output image
+        id: image
+        run: |
+          echo "image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}" >> $GITHUB_OUTPUT
+
+  # Deploy to Production
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    environment: production
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy to ECS
+        run: |
+          # Update ECS service with new image
+          aws ecs update-service \
+            --cluster albata-production \
+            --service albata-web \
+            --force-new-deployment \
+            --task-definition albata-web:REVISION
+
+      - name: Notify Sentry of deployment
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+        with:
+          environment: production
+          version: ${{ github.sha }}
+
+      - name: Run database migrations
+        run: |
+          # Add your migration command here
+          # kubectl exec deployment/albata-web -- npm run migrate
+          echo "Running database migrations..."
+
+      - name: Warm up application
+        run: |
+          echo "Warming up application..."
+          curl -f ${{ vars.NEXT_PUBLIC_SITE_URL }}/api/health
+          curl -f ${{ vars.NEXT_PUBLIC_SITE_URL }}
+
+      - name: Notify Slack
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow
+
+  # Post-deployment verification
+  smoke-test:
+    name: Smoke Tests
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Wait for deployment
+        run: sleep 30
+
+      - name: Health check
+        run: |
+          curl -f ${{ vars.NEXT_PUBLIC_SITE_URL }}/api/health
+          
+      - name: Basic functionality test
+        run: |
+          # Test critical user journeys
+          curl -f ${{ vars.NEXT_PUBLIC_SITE_URL }}
+          curl -f ${{ vars.NEXT_PUBLIC_SITE_URL }}/sitemap.xml
+          curl -f ${{ vars.NEXT_PUBLIC_SITE_URL }}/robots.txt
+
+      - name: Performance test
+        run: |
+          # Run basic performance test
+          npx lighthouse ${{ vars.NEXT_PUBLIC_SITE_URL }} --output=json --output-path=./lighthouse.json --chrome-flags="--headless"
+          
+      - name: Security headers test
+        run: |
+          # Check security headers
+          response=$(curl -s -I ${{ vars.NEXT_PUBLIC_SITE_URL }})
+          echo "$response" | grep -q "X-Content-Type-Options: nosniff" || exit 1
+          echo "$response" | grep -q "X-Frame-Options: DENY" || exit 1
+          echo "$response" | grep -q "X-XSS-Protection: 1; mode=block" || exit 1
+
+  # Rollback on failure
+  rollback:
+    name: Rollback on Failure
+    runs-on: ubuntu-latest
+    needs: [deploy, smoke-test]
+    if: failure() && github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+      - name: Setup AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Rollback ECS service
+        run: |
+          # Rollback to previous stable version
+          aws ecs update-service \
+            --cluster albata-production \
+            --service albata-web \
+            --task-definition albata-web:PREVIOUS
+
+      - name: Notify team of rollback
+        uses: 8398a7/action-slack@v3
+        with:
+          status: 'warning'
+          channel: '#alerts'
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          text: '🚨 Production deployment failed and was rolled back automatically'

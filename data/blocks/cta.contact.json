@@ -1,0 +1,25 @@
+{
+  "id": "cta.contact",
+  "tree": [
+    {
+      "id": "contact-cta",
+      "key": "CTA",
+      "props": {
+        "heading": "Questions About Your Privacy?",
+        "description": "Contact us if you have any questions about how we handle your data.",
+        "primaryButton": {
+          "text": "Contact Us",
+          "href": "/contact",
+          "variant": "primary"
+        },
+        "background": "token:color.bg.secondary",
+        "className": "py-16"
+      },
+      "weight": 2,
+      "analytics": {
+        "id": "contact-cta",
+        "tags": ["contact", "privacy"]
+      }
+    }
+  ]
+}

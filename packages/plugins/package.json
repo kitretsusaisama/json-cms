@@ -1,0 +1,32 @@
+{
+  "name": "@upflame/plugins",
+  "version": "0.1.0",
+  "description": "Plugin lifecycle and manifest boundary contracts.",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs .",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "@upflame/cms-core": "^0.1.0",
+    "@upflame/runtime": "^0.1.0",
+    "@upflame/plugin-sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  }
+}

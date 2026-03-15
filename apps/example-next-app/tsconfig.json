@@ -1,0 +1,12 @@
+{
+  "extends": "../../tooling/tsconfig/next-app.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*", "../../src/*"],
+      "@workspace/*": ["../../src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

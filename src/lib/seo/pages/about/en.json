@@ -1,0 +1,49 @@
+{
+  "title": "About Albata - Our Mission and Vision",
+  "description": "Learn about Albata, our mission, vision, and the team behind this innovative web application.",
+  "keywords": ["about Albata", "mission", "vision", "team", "company"],
+  "openGraph": {
+    "title": "About Albata - Our Mission and Vision",
+    "description": "Learn about Albata, our mission, vision, and the team behind this innovative web application.",
+    "type": "website",
+    "images": [
+      {
+        "url": "/images/about-og-image.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "About Albata"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "About Albata - Our Mission and Vision",
+    "description": "Learn about Albata, our mission, vision, and the team behind this innovative web application.",
+    "image": "/images/about-twitter-image.jpg",
+    "imageAlt": "About Albata"
+  },
+  "structuredData": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Albata",
+    "url": "https://albata.example.com",
+    "logo": "https://albata.example.com/images/logo.png",
+    "description": "Albata is a modern web application with multilingual support and advanced features.",
+    "foundingDate": "2023",
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Founder Name"
+      }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Main St",
+      "addressLocality": "City",
+      "addressRegion": "State",
+      "postalCode": "12345",
+      "addressCountry": "Country"
+    }
+  },
+  "integrityToken": "f7e6d5c4b3a2"
+}

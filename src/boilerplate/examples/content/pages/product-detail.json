@@ -1,0 +1,95 @@
+{
+  "id": "product-detail",
+  "title": "{{product.name}} - Product Details",
+  "blocks": [
+    "product.hero",
+    "product.gallery",
+    "product.specifications",
+    "product.reviews",
+    "product.related"
+  ],
+  "prepend": [
+    {
+      "id": "breadcrumb-nav",
+      "key": "Breadcrumb",
+      "props": {
+        "items": [
+          { "text": "Home", "href": "/" },
+          { "text": "Products", "href": "/products" },
+          { "text": "{{product.category}}", "href": "/products/{{product.categorySlug}}" },
+          { "text": "{{product.name}}", "href": "#", "current": true }
+        ]
+      },
+      "weight": 1
+    }
+  ],
+  "append": [
+    {
+      "id": "back-to-top",
+      "key": "BackToTop",
+      "props": {
+        "threshold": 300,
+        "smooth": true
+      },
+      "conditions": [
+        {
+          "when": {
+            "op": "!=",
+            "args": [{ "$ctx": "device" }, "mobile"]
+          }
+        }
+      ],
+      "weight": 1
+    }
+  ],
+  "constraints": [
+    {
+      "id": "product-hero-required",
+      "rule": {
+        "op": "in",
+        "args": [
+          "product.hero",
+          { "$ctx": "blocks" }
+        ]
+      }
+    },
+    {
+      "id": "product-data-required",
+      "rule": {
+        "op": "and",
+        "args": [
+          {
+            "op": "has",
+            "args": [{ "$ctx": "product" }, "name"]
+          },
+          {
+            "op": "has",
+            "args": [{ "$ctx": "product" }, "price"]
+          },
+          {
+            "op": "has",
+            "args": [{ "$ctx": "product" }, "description"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "seo-title-length",
+      "level": "warn",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "title.length" },
+          60
+        ]
+      }
+    }
+  ],
+  "context": {
+    "page": "product-detail",
+    "section": "ecommerce",
+    "audience": "customers",
+    "productId": "{{product.id}}",
+    "category": "{{product.category}}"
+  }
+}

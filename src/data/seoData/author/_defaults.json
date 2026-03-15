@@ -1,0 +1,62 @@
+{
+  "id": "_defaults",
+  "type": "profile",
+  "title": "{{name}} | Author | Albata Blog",
+  "description": "{{bio || 'Read articles by ' + name + ' on Albata Blog'}}",
+  "canonical": "https://albata.com/authors/{{slug}}",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com/authors/{{slug}}",
+    "es": "https://albata.com/es/autores/{{slug}}"
+  },
+  "openGraph": {
+    "type": "profile",
+    "title": "{{name}} | Albata Author",
+    "description": "{{bio || 'Read articles by ' + name}}",
+    "url": "https://albata.com/authors/{{slug}}",
+    "images": [
+      {
+        "url": "{{imageUrl || 'https://albata.com/images/authors/{{slug}}.jpg'}}",
+        "width": 400,
+        "height": 400,
+        "alt": "{{name}}"
+      }
+    ],
+    "profile": {
+      "firstName": "{{firstName}}",
+      "lastName": "{{lastName}}",
+      "username": "{{username || slug}}",
+      "gender": "{{gender || ''}}"
+    },
+    "siteName": "Albata Blog"
+  },
+  "twitter": {
+    "card": "summary",
+    "title": "{{name}}",
+    "description": "{{bio || 'Author at Albata Blog'}}",
+    "image": "{{imageUrl || 'https://albata.com/images/authors/{{slug}}.jpg'}}",
+    "creator": "{{twitterHandle || ''}}"
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "{{name}}, author, {{expertise || ''}}"
+    },
+    {
+      "name": "profile:first_name",
+      "content": "{{firstName}}"
+    },
+    {
+      "name": "profile:last_name",
+      "content": "{{lastName}}"
+    },
+    {
+      "name": "profile:username",
+      "content": "{{username || slug}}"
+    },
+    {
+      "name": "profile:gender",
+      "content": "{{gender || ''}}"
+    }
+  ]
+}

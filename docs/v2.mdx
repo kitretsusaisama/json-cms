@@ -1,0 +1,42 @@
+﻿# JSON UI Runtime v2
+
+Date: March 9, 2026
+Status: Current Next.js-first runtime guide
+
+## Data Locations
+
+- Pages: `data/pages/*.json`
+- Blocks: `data/blocks/*.json`
+- Overlays: `data/overlays/<scope>/<target>.json`
+- Tokens and i18n: `data/settings/`
+- SEO data: `data/seoData/`
+
+The runtime can still read `src/data/` during migration, but new writes and production ownership should live under `data/`.
+
+## Core Flow
+
+1. Validate content with Zod-backed CMS schemas.
+2. Resolve overlays and references.
+3. Convert persisted page and block documents into `PageV2` runtime records.
+4. Render through the shared component catalog.
+
+## Quickstart
+
+1. Put page JSON in `data/pages/<slug>.json`.
+2. Put reusable block JSON in `data/blocks/<id>.json`.
+3. Render pages through the App Router using the CMS content services.
+4. Use the CMS API routes for CRUD operations instead of reading registries directly.
+
+## Composition Rules
+
+- Pages reference reusable block ids in `blocks`.
+- Inline components belong in `prepend` and `append`.
+- Runtime composition uses `PageV2`.
+- Component props and CMS data contracts are validated in `src/core/content/schemas.ts`.
+
+## Plugin Rules
+
+- Author plugins with `createPlugin()` or `definePlugin()`.
+- Declare compatibility and capabilities in the plugin manifest.
+- Register components and hooks only through the sandboxed SDK registry.
+- Let the plugin host manage activation, deactivation, upgrade, health, and cleanup.

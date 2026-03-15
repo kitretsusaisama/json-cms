@@ -1,0 +1,62 @@
+{
+  "providers": [
+    {
+      "id": "google-analytics",
+      "type": "ga4",
+      "enabled": true,
+      "config": {
+        "measurementId": "${NEXT_PUBLIC_GA_ID}",
+        "gtmId": "${NEXT_PUBLIC_GTM_ID}",
+        "anonymizeIP": true,
+        "cookieConsent": true,
+        "debug": false
+      }
+    },
+    {
+      "id": "mixpanel",
+      "type": "mixpanel", 
+      "enabled": false,
+      "config": {
+        "token": "${MIXPANEL_TOKEN}",
+        "trackPageViews": true,
+        "respectDNT": true
+      }
+    },
+    {
+      "id": "posthog",
+      "type": "posthog",
+      "enabled": false,
+      "config": {
+        "apiKey": "${POSTHOG_KEY}",
+        "apiHost": "${POSTHOG_HOST}",
+        "capturePageViews": true,
+        "sessionRecording": false
+      }
+    }
+  ],
+  "events": {
+    "pageView": true,
+    "scroll": true,
+    "clicks": true,
+    "formSubmissions": true,
+    "errors": true,
+    "performance": true,
+    "customEvents": true
+  },
+  "privacy": {
+    "cookieConsent": true,
+    "gdprCompliant": true,
+    "ccpaCompliant": true,
+    "dataRetention": "26 months",
+    "anonymizeData": true
+  },
+  "realtime": {
+    "enabled": true,
+    "dashboardUrl": "/admin/analytics",
+    "alerts": {
+      "errorSpikes": true,
+      "trafficAnomalies": true,
+      "performanceDegradation": true
+    }
+  }
+}

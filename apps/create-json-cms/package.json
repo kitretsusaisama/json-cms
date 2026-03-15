@@ -1,0 +1,38 @@
+{
+  "name": "create-json-cms",
+  "version": "0.1.0",
+  "description": "Project generator for Upflame CMS applications.",
+  "type": "module",
+  "bin": {
+    "create-json-cms": "./dist/cjs/cli.js"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs .",
+    "test": "pnpm --filter @upflame/installer-core run build && pnpm --filter @upflame/cli-utils run build && vitest run --config vitest.config.ts src/__tests__/create-project.test.ts",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "@upflame/cli-utils": "^1.0.0",
+    "@upflame/installer-core": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.4"
+  }
+}

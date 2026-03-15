@@ -1,0 +1,59 @@
+name: SEO Health Check
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'data/seo/**'
+      - 'data/seoData/**'
+      - 'src/lib/seo/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'data/seo/**'
+      - 'data/seoData/**'
+      - 'src/lib/seo/**'
+
+jobs:
+  check-seo:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run SEO health check
+      uses: ./.github/actions/run-validated-npm-script
+      with:
+        script: check:seo
+    
+    - name: Create issue comment on PR
+      if: github.event_name == 'pull_request' && (failure() || success())
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const reportPath = 'seo-health-report.txt';
+          const report = fs.existsSync(reportPath)
+            ? fs.readFileSync(reportPath, 'utf8')
+            : 'SEO health report file was not generated. Check workflow logs for details.';
+          
+          const maxBodyLength = 65536 - 1000; // GitHub has a 65K character limit for comments
+          const truncatedReport = report.length > maxBodyLength 
+            ? report.substring(0, maxBodyLength) + '\n\n...report truncated due to length...' 
+            : report;
+          
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: `### SEO Health Check Results\n\`\`\`\n${truncatedReport}\n\`\`\``
+          });

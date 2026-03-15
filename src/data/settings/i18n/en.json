@@ -1,0 +1,34 @@
+{
+  "home": {
+    "hero": {
+      "heading": "Build Powerful Sites with JSON",
+      "subheading": "Experience constraint-aware, composable content management"
+    }
+  },
+  "features": {
+    "performance": {
+      "title": "Lightning Fast",
+      "desc": "Optimized rendering with intelligent caching and minimal overhead"
+    },
+    "constraints": {
+      "title": "Constraint-Aware",
+      "desc": "Automatic layout validation ensures consistent, high-quality experiences"
+    },
+    "composable": {
+      "title": "Fully Composable", 
+      "desc": "Mix and match components with type-safe props and slot validation"
+    }
+  },
+  "cta": {
+    "heading": "Ready to Get Started?",
+    "description": "Join thousands of developers building better sites with our JSON-first CMS",
+    "primary": "Start Building",
+    "secondary": "View Demo"
+  },
+  "common": {
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "documentation": "Documentation",
+    "examples": "Examples"
+  }
+}

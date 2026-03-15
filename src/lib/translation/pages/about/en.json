@@ -1,0 +1,18 @@
+{
+  "title": "About Albata",
+  "description": "Learn about Albata, our mission, vision, and the team behind this innovative web application.",
+  "mission": {
+    "title": "Our Mission",
+    "description": "To create powerful, accessible, and multilingual web applications that solve real-world problems and enhance user experiences across the globe."
+  },
+  "vision": {
+    "title": "Our Vision",
+    "description": "To become the leading platform for multilingual web applications, setting new standards for accessibility, performance, and user experience."
+  },
+  "team": {
+    "title": "Our Team",
+    "description": "We are a diverse group of passionate developers, designers, and product specialists committed to building exceptional web experiences."
+  },
+  "backToHome": "Back to Home",
+  "integrityToken": "e7d6c5b4a3"
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"nextjs-adapter-v1.d.ts","sourceRoot":"","sources":["../../src/nextjs-adapter-v1.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,2BAA2B,CAAC;AAE3D,MAAM,WAAW,oBAAoB;IACnC,OAAO,CAAC,EAAE,OAAO,GAAG,KAAK,CAAC;CAC3B;AAED,eAAO,MAAM,eAAe,EAAE,SAAS,CAAC,oBAAoB,EAAE,oBAAoB,EAAE,oBAAoB,EAAE,oBAAoB,CA2B7H,CAAC"}

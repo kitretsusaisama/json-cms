@@ -1,0 +1,32 @@
+{
+  "id": "_defaults",
+  "type": "collection",
+  "title": "{{name}} | Curated Collection | Albata",
+  "description": "{{description || 'Explore our curated collection of ' + name + '. Handpicked selection of the best products.'}}",
+  "canonical": "https://albata.com/collections/{{slug}}",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com/collections/{{slug}}",
+    "es": "https://albata.com/es/colecciones/{{slug}}"
+  },
+  "openGraph": {
+    "type": "website",
+    "title": "{{name}} | Albata Collections",
+    "description": "{{description || 'Explore our curated collection of ' + name}}",
+    "url": "https://albata.com/collections/{{slug}}",
+    "images": [
+      {
+        "url": "{{imageUrl || 'https://albata.com/images/collections/{{slug}}.jpg'}}",
+        "width": 1200,
+        "height": 630,
+        "alt": "{{name}}"
+      }
+    ]
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "{{name}}, collection, {{keywords || ''}}"
+    }
+  ]
+}

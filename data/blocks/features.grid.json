@@ -1,0 +1,73 @@
+{
+  "id": "features.grid",
+  "tree": [
+    {
+      "id": "features-container",
+      "key": "Grid",
+      "props": {
+        "cols": { "base": 1, "md": 2, "lg": 3 },
+        "gap": "token:spacing.lg",
+        "className": "py-16"
+      },
+      "slots": [
+        {
+          "name": "items",
+          "accepts": ["FeatureCard", "Card", "TextBlock"],
+          "items": [
+            {
+              "id": "feature-1",
+              "key": "FeatureCard",
+              "props": {
+                "icon": "⚡",
+                "title": { "$i18n": "features.performance.title" },
+                "description": { "$i18n": "features.performance.desc" }
+              },
+              "weight": 2
+            },
+            {
+              "id": "feature-2", 
+              "key": "FeatureCard",
+              "props": {
+                "icon": "🎯",
+                "title": { "$i18n": "features.constraints.title" },
+                "description": { "$i18n": "features.constraints.desc" }
+              },
+              "weight": 2
+            },
+            {
+              "id": "feature-3",
+              "key": "FeatureCard", 
+              "props": {
+                "icon": "🔧",
+                "title": { "$i18n": "features.composable.title" },
+                "description": { "$i18n": "features.composable.desc" }
+              },
+              "weight": 2,
+              "conditions": [
+                {
+                  "when": {
+                    "op": "!=",
+                    "args": [{ "$ctx": "device" }, "mobile"]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "weight": 3
+    }
+  ],
+  "constraints": [
+    {
+      "id": "min-features",
+      "rule": {
+        "op": ">=",
+        "args": [
+          { "$ctx": "components.0.slots.0.items.length" },
+          2
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@upflame/cli",
+  "version": "0.1.0",
+  "description": "CLI command parsing and install orchestration contracts for Upflame CMS.",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs .",
+    "test": "vitest run --config vitest.config.ts src/__tests__/index.test.ts",
+    "test:smoke": "npm run build && node ../../scripts/smoke-package-fixture.mjs .",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "@upflame/plugin-sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.4"
+  }
+}

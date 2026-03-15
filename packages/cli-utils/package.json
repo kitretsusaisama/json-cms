@@ -1,0 +1,33 @@
+{
+  "name": "@upflame/cli-utils",
+  "version": "1.0.0",
+  "description": "Shared generator and CLI helpers for the Upflame CMS monorepo.",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "node ../../scripts/build-package.mjs .",
+    "test": "vitest run --config vitest.config.ts src/__tests__/cli-utils.test.ts",
+    "prepack": "pnpm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@upflame/installer-core": "^1.0.0"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "nodeLtsRange": ">=20 <21 || >=22 <23",
+  "frameworks": {
+    "next": ">=14 <16",
+    "astro": ">=4 <6",
+    "gatsby": ">=5 <6"
+  },
+  "adapters": {
+    "@upflame/adapter-nextjs": {
+      "framework": "next",
+      "frameworkRange": ">=14 <16",
+      "adapterRange": ">=1 <2"
+    },
+    "@upflame/adapter-astro": {
+      "framework": "astro",
+      "frameworkRange": ">=4 <6",
+      "adapterRange": ">=1 <2"
+    },
+    "@upflame/adapter-gatsby": {
+      "framework": "gatsby",
+      "frameworkRange": ">=5 <6",
+      "adapterRange": ">=1 <2"
+    }
+  },
+  "pluginEngineConstraints": {
+    "node": ">=20 <21 || >=22 <23",
+    "json-cms": ">=1 <2"
+  }
+}

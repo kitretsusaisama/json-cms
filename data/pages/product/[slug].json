@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "seoRef": {
+    "type": "product",
+    "id": "{{slug}}"
+  },
+  "components": [
+    {
+      "key": "product-hero",
+      "type": "Hero",
+      "props": {
+        "title": "{{product.name}}",
+        "subtitle": "{{product.description}}",
+        "image": "{{product.image}}",
+        "ctaText": "Add to Cart",
+        "ctaHref": "/cart/add/{{slug}}"
+      }
+    },
+    {
+      "key": "product-details",
+      "type": "RichText",
+      "props": {
+        "markdown": "{{product.details}}",
+        "allowHtml": true
+      }
+    },
+    {
+      "key": "related-products",
+      "type": "ProductGrid",
+      "props": {
+        "limit": 4,
+        "category": "{{product.category}}",
+        "sortBy": "name"
+      }
+    },
+    {
+      "key": "product-faq",
+      "type": "FAQ",
+      "props": {
+        "items": "{{product.faq}}"
+      }
+    }
+  ],
+  "guards": ["auth:optional"]
+} 

@@ -1,0 +1,80 @@
+{
+  "id": "contact",
+  "type": "page",
+  "title": "Contact — Albata",
+  "description": "Learn more on Contact page",
+  "canonical": "https://albata.com/contact",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com/contact",
+    "es": "https://albata.com/es/contact"
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "web platform, next.js, seo, json pages, security, headless cms, jamstack, react"
+    },
+    {
+      "name": "author",
+      "content": "Albata Team"
+    },
+    {
+      "name": "viewport",
+      "content": "width=device-width, initial-scale=1.0"
+    },
+    {
+      "name": "theme-color",
+      "content": "#ffffff"
+    }
+  ],
+  "openGraph": {
+    "type": "website",
+    "locale": "en_US",
+    "url": "https://albata.com/contact",
+    "title": "Contact — Albata",
+    "description": "Learn more on Contact page",
+    "site_name": "Albata",
+    "images": [
+      {
+        "url": "https://albata.com/images/og-image.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Albata Platform"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "site": "@albata",
+    "creator": "@albata",
+    "title": "Contact — Albata",
+    "description": "Learn more on Contact page",
+    "image": "https://albata.com/images/twitter-card.jpg"
+  },
+  "structuredData": [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Albata",
+      "url": "https://albata.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://albata.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Albata",
+      "url": "https://albata.com",
+      "logo": "https://albata.com/logo.png",
+      "sameAs": [
+        "https://twitter.com/albata",
+        "https://github.com/albata",
+        "https://www.linkedin.com/company/albata"
+      ]
+    }
+  ],
+  "updatedAt": "2025-08-23T12:33:53.752Z"
+}

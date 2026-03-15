@@ -1,0 +1,91 @@
+{
+  "providers": [
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "enabled": true,
+      "testMode": "${NODE_ENV !== 'production'}",
+      "config": {
+        "publishableKey": "${STRIPE_PUBLISHABLE_KEY}",
+        "secretKey": "${STRIPE_SECRET_KEY}",
+        "webhookSecret": "${STRIPE_WEBHOOK_SECRET}",
+        "apiVersion": "2024-06-20",
+        "supportedMethods": ["card", "apple_pay", "google_pay", "sepa_debit"],
+        "currencies": ["USD", "EUR", "GBP", "CAD"],
+        "captureMethod": "automatic",
+        "setupFutureUsage": "off_session"
+      }
+    },
+    {
+      "id": "paypal",
+      "name": "PayPal",
+      "enabled": false,
+      "testMode": "${NODE_ENV !== 'production'}",
+      "config": {
+        "clientId": "${PAYPAL_CLIENT_ID}",
+        "clientSecret": "${PAYPAL_CLIENT_SECRET}",
+        "currency": "USD",
+        "intent": "capture",
+        "supportedMethods": ["paypal", "venmo", "card"]
+      }
+    }
+  ],
+  "security": {
+    "pciCompliance": true,
+    "fraudDetection": true,
+    "3dsRequired": true,
+    "allowedCountries": ["US", "CA", "GB", "DE", "FR", "ES", "IT", "AU"],
+    "blockedCountries": [],
+    "maxTransactionAmount": 10000,
+    "dailyLimit": 50000,
+    "monthlyLimit": 1000000
+  },
+  "webhooks": {
+    "enabled": true,
+    "endpoints": [
+      {
+        "url": "/api/webhooks/stripe",
+        "events": ["payment_intent.succeeded", "payment_intent.payment_failed", "invoice.payment_succeeded"]
+      }
+    ],
+    "retryPolicy": {
+      "maxRetries": 3,
+      "retryDelay": 1000
+    }
+  },
+  "subscriptions": {
+    "enabled": true,
+    "plans": [
+      {
+        "id": "starter",
+        "name": "Starter Plan",
+        "price": 29,
+        "currency": "USD",
+        "interval": "month",
+        "trialDays": 14
+      },
+      {
+        "id": "pro",
+        "name": "Professional Plan", 
+        "price": 99,
+        "currency": "USD",
+        "interval": "month",
+        "trialDays": 14
+      },
+      {
+        "id": "enterprise",
+        "name": "Enterprise Plan",
+        "price": 299,
+        "currency": "USD",
+        "interval": "month",
+        "trialDays": 30
+      }
+    ]
+  },
+  "reporting": {
+    "enabled": true,
+    "dashboard": "/admin/payments",
+    "exportFormats": ["csv", "xlsx", "pdf"],
+    "scheduledReports": true
+  }
+}

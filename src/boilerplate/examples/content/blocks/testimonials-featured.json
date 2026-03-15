@@ -1,0 +1,271 @@
+{
+  "id": "testimonials.featured",
+  "tree": [
+    {
+      "id": "testimonials-section",
+      "key": "Section",
+      "props": {
+        "className": "py-16 lg:py-24 bg-white",
+        "id": "testimonials"
+      },
+      "slotIds": ["testimonials-container"],
+      "weight": 1
+    }
+  ],
+  "slots": [
+    {
+      "id": "testimonials-container",
+      "name": "content",
+      "accepts": ["Container"],
+      "itemIds": ["testimonials-wrapper"]
+    },
+    {
+      "id": "testimonials-carousel",
+      "name": "carousel",
+      "accepts": ["TestimonialCard", "Card"],
+      "itemIds": ["testimonial-1", "testimonial-2", "testimonial-3", "testimonial-4"]
+    }
+  ],
+  "components": [
+    {
+      "id": "testimonials-wrapper",
+      "key": "Container",
+      "props": {
+        "maxWidth": "6xl",
+        "className": "text-center"
+      },
+      "slotIds": ["testimonials-header", "testimonials-carousel-container"],
+      "weight": 1
+    },
+    {
+      "id": "testimonials-header",
+      "key": "SectionHeader",
+      "props": {
+        "heading": {
+          "$i18n": "homepage.testimonials.heading",
+          "fallback": "Loved by Developers"
+        },
+        "subheading": {
+          "$i18n": "homepage.testimonials.subheading",
+          "fallback": "See what our community has to say about their experience."
+        },
+        "className": "mb-16"
+      },
+      "weight": 1
+    },
+    {
+      "id": "testimonials-carousel-container",
+      "key": "Carousel",
+      "props": {
+        "autoplay": true,
+        "interval": 5000,
+        "showDots": true,
+        "showArrows": false,
+        "slidesToShow": { "base": 1, "md": 2, "lg": 3 },
+        "gap": "token:spacing.6"
+      },
+      "slotIds": ["testimonials-carousel"],
+      "variants": [
+        {
+          "name": "grid",
+          "props": {
+            "component": "Grid",
+            "cols": { "base": 1, "md": 2, "lg": 3 },
+            "gap": "token:spacing.6",
+            "autoplay": false
+          },
+          "weight": 2,
+          "conditions": [
+            {
+              "when": {
+                "op": "==",
+                "args": [{ "$ctx": "device" }, "desktop"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "single",
+          "props": {
+            "slidesToShow": { "base": 1 },
+            "showDots": true,
+            "showArrows": true,
+            "centerMode": true
+          },
+          "weight": 1,
+          "conditions": [
+            {
+              "when": {
+                "op": "==",
+                "args": [{ "$ctx": "device" }, "mobile"]
+              }
+            }
+          ]
+        }
+      ],
+      "weight": 2
+    },
+    {
+      "id": "testimonial-1",
+      "key": "TestimonialCard",
+      "props": {
+        "quote": "This platform has completely transformed how we build and manage our content. The constraint system is genius!",
+        "author": {
+          "name": "Sarah Chen",
+          "title": "Lead Developer",
+          "company": "TechCorp Inc.",
+          "avatar": "/images/testimonials/sarah-chen.jpg"
+        },
+        "rating": 5,
+        "featured": true
+      },
+      "weight": 4,
+      "analytics": {
+        "id": "testimonial-sarah",
+        "tags": ["testimonial", "featured", "developer"]
+      }
+    },
+    {
+      "id": "testimonial-2",
+      "key": "TestimonialCard",
+      "props": {
+        "quote": "The migration from our old CMS was seamless. The team support was exceptional throughout the process.",
+        "author": {
+          "name": "Marcus Rodriguez",
+          "title": "CTO",
+          "company": "StartupXYZ",
+          "avatar": "/images/testimonials/marcus-rodriguez.jpg"
+        },
+        "rating": 5,
+        "featured": true
+      },
+      "weight": 3,
+      "analytics": {
+        "id": "testimonial-marcus",
+        "tags": ["testimonial", "featured", "cto"]
+      }
+    },
+    {
+      "id": "testimonial-3",
+      "key": "TestimonialCard",
+      "props": {
+        "quote": "Finally, a CMS that developers and content creators both love. The JSON approach is brilliant.",
+        "author": {
+          "name": "Emily Johnson",
+          "title": "Product Manager",
+          "company": "Digital Agency Co.",
+          "avatar": "/images/testimonials/emily-johnson.jpg"
+        },
+        "rating": 5,
+        "featured": false
+      },
+      "weight": 3,
+      "conditions": [
+        {
+          "when": {
+            "op": "!=",
+            "args": [{ "$ctx": "device" }, "mobile"]
+          }
+        }
+      ],
+      "analytics": {
+        "id": "testimonial-emily",
+        "tags": ["testimonial", "product-manager"]
+      }
+    },
+    {
+      "id": "testimonial-4",
+      "key": "TestimonialCard",
+      "props": {
+        "quote": "The performance improvements we've seen since switching are incredible. Our pages load 3x faster.",
+        "author": {
+          "name": "David Kim",
+          "title": "Frontend Architect",
+          "company": "E-commerce Plus",
+          "avatar": "/images/testimonials/david-kim.jpg"
+        },
+        "rating": 5,
+        "featured": false
+      },
+      "weight": 2,
+      "conditions": [
+        {
+          "when": {
+            "op": "==",
+            "args": [{ "$ctx": "device" }, "desktop"]
+          }
+        }
+      ],
+      "analytics": {
+        "id": "testimonial-david",
+        "tags": ["testimonial", "performance", "architect"]
+      }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "min-testimonials",
+      "rule": {
+        "op": ">=",
+        "args": [
+          { "$ctx": "components.length" },
+          2
+        ]
+      }
+    },
+    {
+      "id": "max-testimonials",
+      "level": "warn",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "components.length" },
+          6
+        ]
+      }
+    },
+    {
+      "id": "testimonials-have-quotes",
+      "rule": {
+        "op": "and",
+        "args": [
+          {
+            "op": "has",
+            "args": [{ "$ctx": "components.0.props" }, "quote"]
+          },
+          {
+            "op": ">",
+            "args": [{ "$ctx": "components.0.props.quote.length" }, 10]
+          }
+        ]
+      }
+    },
+    {
+      "id": "testimonials-have-authors",
+      "rule": {
+        "op": "and",
+        "args": [
+          {
+            "op": "has",
+            "args": [{ "$ctx": "components.0.props" }, "author"]
+          },
+          {
+            "op": "has",
+            "args": [{ "$ctx": "components.0.props.author" }, "name"]
+          }
+        ]
+      }
+    },
+    {
+      "id": "quote-length-limit",
+      "level": "warn",
+      "rule": {
+        "op": "<=",
+        "args": [
+          { "$ctx": "components.0.props.quote.length" },
+          200
+        ]
+      }
+    }
+  ]
+}

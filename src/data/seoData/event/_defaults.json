@@ -1,0 +1,87 @@
+{
+  "id": "_defaults",
+  "type": "event",
+  "title": "{{name}} | {{date | formatDate}} | Albata Events",
+  "description": "{{description || 'Join us for ' + name + ' on ' + (date | formatDate) + (location ? ' at ' + location.name : '')}}",
+  "canonical": "https://albata.com/events/{{slug}}",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com/events/{{slug}}",
+    "es": "https://albata.com/es/eventos/{{slug}}"
+  },
+  "openGraph": {
+    "type": "event",
+    "title": "{{name}}",
+    "description": "{{description || 'Join us for ' + name + ' on ' + (date | formatDate)}}",
+    "url": "https://albata.com/events/{{slug}}",
+    "images": [
+      {
+        "url": "{{imageUrl || 'https://albata.com/images/events/' + slug + '.jpg'}}",
+        "width": 1200,
+        "height": 630,
+        "alt": "{{name}}"
+      }
+    ],
+    "event": {
+      "start_time": "{{startDate | isoDate}}",
+      "end_time": "{{endDate | isoDate}}",
+      "location": "{{location?.name || 'Online'}}",
+      "price": "{{price || 'Free'}}"
+    }
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "{{name}} | {{date | formatDate}}",
+    "description": "{{description || 'Join us for this event on ' + (date | formatDate)}}",
+    "image": "{{imageUrl || 'https://albata.com/images/events/' + slug + '-social.jpg'}}"
+  },
+  "structuredData": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "{{name}}",
+      "description": "{{description || 'Join us for this special event'}}",
+      "startDate": "{{startDate | isoDate}}",
+      "endDate": "{{endDate | isoDate}}",
+      "eventStatus": "{{status || 'EventScheduled'}}",
+      "eventAttendanceMode": "{{isOnline ? 'OnlineEventAttendanceMode' : 'OfflineEventAttendanceMode'}}",
+      "location": {
+        "@type": "Place",
+        "name": "{{location.name || 'Online'}}",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "{{location.street || ''}}",
+          "addressLocality": "{{location.city || ''}}",
+          "addressRegion": "{{location.region || ''}}",
+          "postalCode": "{{location.postalCode || ''}}",
+          "addressCountry": "{{location.country || ''}}"
+        }
+      },
+      "image": [
+        "{{imageUrl || 'https://albata.com/images/events/' + slug + '.jpg'}}"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "url": "https://albata.com/events/{{slug}}",
+        "price": "{{price || '0'}}",
+        "priceCurrency": "{{currency || 'USD'}}",
+        "availability": "{{isSoldOut ? 'SoldOut' : 'InStock'}}",
+        "validFrom": "{{saleStartDate || createdDate}}"
+      },
+      "performer": {
+        "@type": "PerformingGroup",
+        "name": "{{organizer || 'Albata Events'}}"
+      }
+    }
+  ],
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "{{keywords || ''}}, event, {{date | formatDate('MMMM YYYY')}}"
+    },
+    {
+      "name": "author",
+      "content": "{{organizer || 'Albata Events'}}"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "../../tooling/tsconfig/package-library.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts"
+  ],
+  "exclude": [
+    "src/**/__tests__/**"
+  ]
+}

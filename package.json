@@ -1,0 +1,192 @@
+{
+  "name": "@upflame/json-cms",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Production-grade data-driven CMS runtime for Next.js App Router with plugin-ready adapters.",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "plugins/*",
+    "tooling/*"
+  ],
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/core/content/schemas.d.ts",
+      "import": "./dist/esm/core/content/schemas.js",
+      "require": "./dist/cjs/core/content/schemas.js"
+    },
+    "./resolve": {
+      "types": "./dist/types/resolve.d.ts",
+      "import": "./dist/esm/resolve.js",
+      "require": "./dist/cjs/resolve.js"
+    },
+    "./plan": {
+      "types": "./dist/types/plan.d.ts",
+      "import": "./dist/esm/plan.js",
+      "require": "./dist/cjs/plan.js"
+    },
+    "./renderer": {
+      "types": "./dist/types/renderer.d.ts",
+      "import": "./dist/esm/renderer.js",
+      "require": "./dist/cjs/renderer.js"
+    },
+    "./security": {
+      "types": "./dist/types/security.d.ts",
+      "import": "./dist/esm/security.js",
+      "require": "./dist/cjs/security.js"
+    },
+    "./plugin-sdk": {
+      "types": "./dist/types/plugin-sdk.d.ts",
+      "import": "./dist/esm/plugin-sdk.js",
+      "require": "./dist/cjs/plugin-sdk.js"
+    },
+    "./runtime": {
+      "types": "./dist/types/runtime.d.ts",
+      "import": "./dist/esm/runtime.js",
+      "require": "./dist/cjs/runtime.js"
+    }
+  },
+  "files": [
+    "dist",
+    "docs",
+    "README.md"
+  ],
+  "bin": {
+    "jsoncms": "./dist/esm/cli/dx.js",
+    "cms": "./dist/esm/cli/dx.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:package": "node ./scripts/build-package.mjs . ./tsconfig.build.json",
+    "build:packages": "pnpm run build:wave1",
+    "build:packages:all": "pnpm -r --if-present run build",
+    "build:monorepo": "pnpm run build:packages",
+    "build:wave1": "pnpm run build:package && pnpm --filter @upflame/adapter-nextjs run build && pnpm --filter @upflame/installer-core run build && pnpm --filter @upflame/cli-utils run build && pnpm --filter create-json-cms run build",
+    "typecheck": "tsc --noEmit",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest",
+    "test:unit": "vitest run --config vitest.config.ts",
+    "test:wave1:unit": "pnpm --filter @upflame/installer-core test && pnpm --filter @upflame/cli-utils test && pnpm exec vitest run --config vitest.config.ts src/install/__tests__/auto-bootstrap.test.ts src/adapters/__tests__/project-detection.test.ts",
+    "test:packages": "pnpm run test:wave1",
+    "test:packages:all": "pnpm -r --if-present run test",
+    "test:monorepo": "pnpm run test:packages",
+    "test:unit:watch": "vitest --config vitest.config.ts",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "test:wave1:integration": "pnpm --filter create-json-cms test",
+    "test:wave1": "pnpm run test:wave1:unit && pnpm run test:wave1:integration",
+    "test:integration:watch": "vitest --config vitest.integration.config.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:performance": "vitest run --config vitest.performance.config.ts",
+    "test:all": "tsx scripts/run-tests.ts",
+    "test:coverage": "vitest run --coverage",
+    "test:ci": "tsx scripts/run-tests.ts --bail --parallel",
+    "generate:seo": "node scripts/generate-seo.js",
+    "check:schemas": "node scripts/check-schemas.js",
+    "validate:json": "npm run check:schemas",
+    "check:seo": "tsx src/lib/seo/health.ts",
+    "generate:page": "tsx scripts/generate-page.ts",
+    "dx": "tsx src/cli/dx.ts",
+    "jsoncms": "tsx src/cli/dx.ts",
+    "validate": "tsx src/cli/dx.ts validate",
+    "plan": "tsx src/cli/dx.ts plan",
+    "check:docs": "node scripts/check-required-docs.mjs && npm run lint:docs",
+    "lint:docs": "node scripts/lint-docs-conventions.mjs",
+    "cms": "tsx src/cli/dx.ts",
+    "format:check": "prettier --check .",
+    "check:no-file-deps": "node scripts/check-no-file-deps.mjs",
+    "check:publish-materials": "node scripts/check-publish-materials.mjs",
+    "release:version": "npx changeset version",
+    "release:publish": "npx changeset publish",
+    "test:workflows": "vitest run --config vitest.config.ts __tests__/workflows/workflows.test.ts",
+    "check:compat": "tsx scripts/check-compat-conformance.ts",
+    "pack:verify": "node ./scripts/verify-packages.mjs",
+    "ci:wave1": "pnpm run check:no-file-deps && pnpm run check:publish-materials && pnpm run typecheck && pnpm run build:wave1 && pnpm run test:wave1 && pnpm run pack:verify",
+    "prepack": "pnpm run build:package",
+    "postinstall": "node -e \"const fs=require('fs');const cp=require('child_process');const p='./dist/esm/install/postinstall.js';if(fs.existsSync(p)){cp.execFileSync(process.execPath,[p],{stdio:'inherit'});}\""
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@prisma/instrumentation": "^6.14.0",
+    "@sentry/node": "^10.5.0",
+    "@sentry/react": "^10.5.0",
+    "@tanstack/react-query": "5.52.1",
+    "@tanstack/react-query-devtools": "5.52.1",
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "chalk": "5.3.0",
+    "commander": "12.1.0",
+    "cookie": "^1.0.2",
+    "dompurify": "^3.2.6",
+    "esbuild": "^0.25.9",
+    "framer-motion": "^12.23.12",
+    "isomorphic-dompurify": "^2.26.0",
+    "jose": "5.6.3",
+    "lodash": "^4.17.21",
+    "next": "15.5.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hook-form": "7.52.2",
+    "react-hot-toast": "2.6.0",
+    "swr": "^2.3.6",
+    "tailwindcss": "3.4.10",
+    "typescript": "5.6.2",
+    "winston": "3.14.2",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.24.6",
+    "zustand": "4.5.5",
+    "@upflame/adapter-contract": "^0.1.0",
+    "@upflame/installer-core": "^1.0.0",
+    "glob": "^10.4.5"
+  },
+  "devDependencies": {
+    "@axe-core/react": "4.10.0",
+    "@next/bundle-analyzer": "15.5.0",
+    "@playwright/test": "1.51.1",
+    "@sentry/nextjs": "^10.7.0",
+    "@storybook/nextjs": "8.4.3",
+    "@testing-library/react": "16.0.1",
+    "@types/node": "22.5.1",
+    "@types/react": "18.2.55",
+    "@types/react-dom": "18.2.19",
+    "@typescript-eslint/eslint-plugin": "8.3.0",
+    "autoprefixer": "10.4.17",
+    "chromatic": "11.7.1",
+    "commitizen": "4.3.0",
+    "cross-env": "7.0.3",
+    "dotenv-vault": "1.26.2",
+    "eslint": "8.57.0",
+    "eslint-config-next": "15.5.0",
+    "husky": "9.1.5",
+    "lighthouse": "12.2.1",
+    "lint-staged": "15.2.9",
+    "postcss": "8.4.35",
+    "prettier": "3.3.3",
+    "tsx": "^4.20.4",
+    "vitest": "^3.2.4",
+    "tsc-alias": "^1.8.16"
+  },
+  "keywords": [
+    "nextjs",
+    "cms",
+    "json",
+    "app-router",
+    "plugin",
+    "headless"
+  ],
+  "module": "./dist/esm/index.js",
+  "sideEffects": false,
+  "packageManager": "pnpm@9.0.0"
+}

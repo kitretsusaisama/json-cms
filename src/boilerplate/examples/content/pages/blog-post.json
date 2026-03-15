@@ -1,0 +1,147 @@
+{
+  "id": "blog-post",
+  "title": "{{post.title}}",
+  "blocks": [
+    "blog.header",
+    "blog.content",
+    "blog.author",
+    "blog.related",
+    "blog.comments"
+  ],
+  "prepend": [
+    {
+      "id": "reading-progress",
+      "key": "ReadingProgress",
+      "props": {
+        "color": "token:color.primary.500",
+        "height": 3,
+        "position": "top"
+      },
+      "conditions": [
+        {
+          "when": {
+            "op": ">=",
+            "args": [
+              { "$ctx": "post.readingTime" },
+              3
+            ]
+          }
+        }
+      ],
+      "weight": 1
+    }
+  ],
+  "append": [
+    {
+      "id": "social-share",
+      "key": "SocialShare",
+      "props": {
+        "title": "{{post.title}}",
+        "url": "{{post.canonicalUrl}}",
+        "description": "{{post.excerpt}}",
+        "platforms": ["twitter", "facebook", "linkedin", "email"],
+        "position": "sticky"
+      },
+      "weight": 2,
+      "analytics": {
+        "id": "social-share",
+        "tags": ["engagement", "sharing"]
+      }
+    },
+    {
+      "id": "newsletter-cta",
+      "key": "NewsletterCTA",
+      "props": {
+        "heading": "Enjoyed this article?",
+        "description": "Subscribe to get more insights like this delivered to your inbox.",
+        "variant": "inline",
+        "source": "blog-post"
+      },
+      "conditions": [
+        {
+          "when": {
+            "op": "!=",
+            "args": [
+              { "$ctx": "user.subscribed" },
+              true
+            ]
+          }
+        }
+      ],
+      "weight": 1,
+      "analytics": {
+        "id": "blog-newsletter-cta",
+        "tags": ["conversion", "newsletter", "blog"]
+      }
+    }
+  ],
+  "constraints": [
+    {
+      "id": "blog-header-first",
+      "rule": {
+        "op": "==",
+        "args": [
+          { "$ctx": "blocks.0" },
+          "blog.header"
+        ]
+      }
+    },
+    {
+      "id": "blog-content-second",
+      "rule": {
+        "op": "==",
+        "args": [
+          { "$ctx": "blocks.1" },
+          "blog.content"
+        ]
+      }
+    },
+    {
+      "id": "post-title-required",
+      "rule": {
+        "op": "and",
+        "args": [
+          {
+            "op": "has",
+            "args": [{ "$ctx": "post" }, "title"]
+          },
+          {
+            "op": ">",
+            "args": [
+              { "$ctx": "post.title.length" },
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "reading-time-estimate",
+      "level": "warn",
+      "rule": {
+        "op": "and",
+        "args": [
+          {
+            "op": "has",
+            "args": [{ "$ctx": "post" }, "readingTime"]
+          },
+          {
+            "op": ">",
+            "args": [
+              { "$ctx": "post.readingTime" },
+              0
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "context": {
+    "page": "blog-post",
+    "section": "blog",
+    "audience": "readers",
+    "postId": "{{post.id}}",
+    "category": "{{post.category}}",
+    "publishedAt": "{{post.publishedAt}}"
+  }
+}

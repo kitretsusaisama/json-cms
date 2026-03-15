@@ -1,0 +1,53 @@
+{
+  "name": "sample-plugin",
+  "version": "1.0.0",
+  "description": "A sample plugin demonstrating the boilerplate plugin system",
+  "author": "Boilerplate Team",
+  "license": "MIT",
+  "homepage": "https://github.com/example/sample-plugin",
+  "keywords": ["boilerplate", "sample", "demo"],
+  "boilerplate": {
+    "minVersion": "1.0.0"
+  },
+  "components": [
+    {
+      "key": "sample-card",
+      "path": "./components/SampleCard.tsx",
+      "metadata": {
+        "name": "Sample Card",
+        "description": "A sample card component from the plugin",
+        "category": "content",
+        "tags": ["card", "sample"]
+      }
+    }
+  ],
+  "apiEndpoints": [
+    {
+      "path": "/api/sample",
+      "methods": ["GET", "POST"],
+      "handler": "./handlers/sample.js",
+      "permissions": ["read:sample"]
+    }
+  ],
+  "hooks": [
+    {
+      "name": "before-render",
+      "handler": "./hooks/beforeRender.js",
+      "priority": 10
+    }
+  ],
+  "permissions": [
+    {
+      "name": "read:sample",
+      "description": "Read sample data",
+      "resource": "sample",
+      "actions": ["read"]
+    },
+    {
+      "name": "write:sample",
+      "description": "Write sample data",
+      "resource": "sample",
+      "actions": ["create", "update", "delete"]
+    }
+  ]
+}

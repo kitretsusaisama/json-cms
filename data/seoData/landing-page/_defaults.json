@@ -1,0 +1,46 @@
+{
+  "id": "_defaults",
+  "type": "landing_page",
+  "title": "{{title}} | {{campaign}} | Albata",
+  "description": "{{description || 'Special landing page for ' + campaign + '. ' + (offer || 'Limited time offer.')}}",
+  "canonical": "https://albata.com/{{slug}}",
+  "robots": "{{noIndex ? 'noindex, nofollow' : 'index, follow'}}",
+  "alternates": {
+    "en": "https://albata.com/{{slug}}",
+    "es": "https://albata.com/es/{{slug}}"
+  },
+  "openGraph": {
+    "type": "website",
+    "title": "{{title || name}}",
+    "description": "{{description || 'Special landing page for ' + campaign}}",
+    "url": "https://albata.com/{{slug}}",
+    "images": [
+      {
+        "url": "{{imageUrl || 'https://albata.com/images/landing-pages/' + slug + '.jpg'}}",
+        "width": 1200,
+        "height": 630,
+        "alt": "{{title || name}}"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "{{title || name}}",
+    "description": "{{description || 'Special landing page for ' + campaign}}",
+    "image": "{{imageUrl || 'https://albata.com/images/landing-pages/' + slug + '-social.jpg'}}"
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "{{keywords || ''}}, {{campaign}}, landing page, promotion"
+    },
+    {
+      "name": "fb:app_id",
+      "content": "{{facebookAppId || ''}}"
+    },
+    {
+      "name": "p:domain_verify",
+      "content": "{{pinterestVerify || ''}}"
+    }
+  ]
+}

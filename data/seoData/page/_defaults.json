@@ -1,0 +1,57 @@
+{
+  "id": "_defaults",
+  "type": "page",
+  "title": "Albata - Modern Web Platform",
+  "description": "A modern, secure, and scalable web platform built with Next.js, featuring SEO optimization, JSON page design, and advanced security features.",
+  "canonical": "https://albata.com",
+  "robots": "index,follow",
+  "alternates": {
+    "en": "https://albata.com",
+    "es": "https://albata.com/es"
+  },
+  "meta": [
+    {
+      "name": "keywords",
+      "content": "web platform, next.js, seo, json pages, security"
+    },
+    {
+      "name": "author",
+      "content": "Albata Team"
+    },
+    {
+      "property": "og:site_name",
+      "content": "Albata"
+    }
+  ],
+  "openGraph": {
+    "type": "website",
+    "title": "Albata - Modern Web Platform",
+    "description": "A modern, secure, and scalable web platform built with Next.js.",
+    "url": "https://albata.com",
+    "images": [
+      {
+        "url": "https://albata.com/og-image.jpg",
+        "alt": "Albata Platform"
+      }
+    ]
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "site": "@albata",
+    "creator": "@albata",
+    "title": "Albata - Modern Web Platform",
+    "description": "A modern, secure, and scalable web platform built with Next.js.",
+    "image": "https://albata.com/twitter-image.jpg"
+  },
+  "structuredData": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Albata",
+      "url": "https://albata.com",
+      "logo": "https://albata.com/logo.png",
+      "description": "A modern, secure, and scalable web platform"
+    }
+  ],
+  "updatedAt": "2025-08-23T00:00:00.000Z"
+} 

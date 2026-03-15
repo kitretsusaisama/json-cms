@@ -1,0 +1,52 @@
+{
+  "id": "privacy",
+  "title": "Privacy Policy",
+  "prepend": [
+    {
+      "id": "seo-meta",
+      "key": "SEO",
+      "props": {
+        "title": "Privacy Policy - Albata",
+        "description": "Learn about Albata's privacy policy and how we protect your data.",
+        "ogImage": "https://albata.com/images/privacy-og.jpg"
+      }
+    },
+    {
+      "id": "hero-1",
+      "key": "Hero",
+      "props": {
+        "heading": "Privacy Policy",
+        "subheading": "Your privacy is important to us. Learn how we collect, use, and protect your information.",
+        "cta": {
+          "text": "Contact Us",
+          "href": "/contact"
+        }
+      },
+      "weight": 4
+    },
+    {
+      "id": "privacy-content",
+      "key": "RichText",
+      "props": {
+        "content": "# Privacy Policy\n\n*Last updated: August 23, 2025*\n\n## Introduction\n\nAlbata (\"we,\" \"our,\" or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform.\n\n## Information We Collect\n\n### Personal Information\n- Email addresses\n- Names and contact information\n- Account credentials\n- Usage data and analytics\n\n### Technical Information\n- IP addresses\n- Browser type and version\n- Device information\n- Cookies and tracking data\n\n## How We Use Your Information\n\nWe use the information we collect to:\n- Provide and maintain our services\n- Process transactions\n- Send important notices\n- Improve our platform\n- Ensure security and prevent fraud\n\n## Data Security\n\nWe implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.\n\n## Your Rights\n\nYou have the right to:\n- Access your personal data\n- Correct inaccurate data\n- Delete your data\n- Restrict processing\n- Data portability\n\n## Contact Us\n\nIf you have questions about this Privacy Policy, please contact us at privacy@albata.com."
+      },
+      "weight": 3
+    }
+  ],
+  "constraints": [
+    {
+      "id": "privacy-has-content",
+      "rule": {
+        "op": ">=",
+        "args": [
+          { "$ctx": "metrics.totalComponents" },
+          2
+        ]
+      }
+    }
+  ],
+  "context": {
+    "device": "desktop",
+    "locale": "en"
+  }
+}

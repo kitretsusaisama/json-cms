@@ -1,0 +1,336 @@
+/**
+ * Advanced error reporting and monitoring system
+ */
+//error-reporting.ts
+import * as Sentry from '@sentry/nextjs';
+import type { Breadcrumb, Scope, User } from '@sentry/nextjs';
+
+// -----------------------------
+// Types & Interfaces
+// -----------------------------
+
+export type ErrorSeverity = 'fatal' | 'error' | 'warning' | 'info' | 'debug';
+export type ErrorSource = 'client' | 'server' | 'api' | 'database' | 'external';
+
+export interface ErrorContext {
+  source?: ErrorSource;
+  url?: string;
+  component?: string;
+  action?: string;
+  [key: string]: unknown;
+}
+
+export interface ErrorMetadata {
+  userId?: string;
+  sessionId?: string;
+  requestId?: string;
+  url?: string;
+  component?: string;
+  action?: string;
+  source?: ErrorSource;
+  version?: string;
+  environment?: string;
+  tags?: Record<string, string>;
+  [key: string]: unknown;                 // <- changed any -> unknown
+}
+
+export interface ErrorReporterOptions {
+  dsn: string;
+  environment?: string;
+  release?: string;
+  debug?: boolean;
+  tracesSampleRate?: number;
+  sessionId?: string;
+}
+
+export interface ErrorBoundaryFallbackProps {
+  error: Error;
+  resetErrorBoundary: () => void;
+}
+
+// -----------------------------
+// ErrorReporter Singleton
+// -----------------------------
+
+export class ErrorReporter {
+  private static instance: ErrorReporter;
+  private isInitialized = false;
+
+  // prevents the empty-constructor warning
+  private constructor() {/* no-op */}
+
+  public static getInstance(): ErrorReporter {
+    if (!ErrorReporter.instance) {
+      ErrorReporter.instance = new ErrorReporter();
+    }
+    return ErrorReporter.instance;
+  }
+
+  public initialize(options: ErrorReporterOptions): void {
+    if (this.isInitialized) {
+      return;
+    }
+    if (!options.dsn) {
+      throw new Error('Sentry DSN is required to initialize ErrorReporter.');
+    }
+
+    Sentry.init({
+      dsn: options.dsn,
+      environment: options.environment || process.env.NODE_ENV || 'development',
+      release: options.release || process.env.NEXT_PUBLIC_APP_VERSION || '1.0.0',
+      debug: options.debug || false,
+      tracesSampleRate: options.tracesSampleRate ?? 0.1,
+      maxBreadcrumbs: 50,
+      beforeSend: (event) => {
+        if (options.sessionId) {
+          event.tags = event.tags || {};
+          (event.tags as Record<string, string>).sessionId = options.sessionId;
+        }
+        return event;
+      },
+    });
+
+    this.setupGlobalHandlers();
+    this.isInitialized = true;
+  }
+
+ // -----------------------------
+// Global Error Handlers
+// -----------------------------
+private setupGlobalHandlers(): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const win = window as Window;
+
+  // Define structured error options type
+  interface WindowErrorHandlerOptions {
+    message: string | Event;
+    source?: string;
+    lineno?: number;
+    colno?: number;
+    error?: Error;
+  }
+
+  const originalOnError = win.onerror;
+  win.onerror = (...args: Parameters<Exclude<typeof win.onerror, null>>) => {
+    const [message, source, lineno, colno, error] = args;
+    const errorOptions: WindowErrorHandlerOptions = { message, source, lineno, colno, error };
+
+    ErrorReporter.getInstance().captureException(
+      errorOptions.error || new Error(String(errorOptions.message)),
+      { source: 'client', url: win.location.href }
+    );
+
+    if (originalOnError) {
+      return originalOnError.apply(window, args);
+    }
+    return false;
+  };
+
+  // window.onunhandledrejection stays the same
+  const originalOnUnhandledRejection = win.onunhandledrejection;
+  win.onunhandledrejection = (event: PromiseRejectionEvent) => {
+    ErrorReporter.getInstance().captureException(
+      event.reason || new Error('Unhandled Promise rejection'),
+      { source: 'client', url: win.location.href }
+    );
+    if (originalOnUnhandledRejection) {
+      return originalOnUnhandledRejection.call(window, event);
+    }
+    return false;
+  };
+
+  // fetch interception stays unchanged
+  const originalFetch = win.fetch.bind(win);
+  win.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+    try {
+      const response = await originalFetch(input, init);
+      if (!response.ok) {
+        this.addBreadcrumb({
+          category: 'network',
+          message: `Fetch error: ${response.status} ${response.statusText}`,
+          level: 'error',
+          data: {
+            url: response.url,
+            status: response.status,
+            statusText: response.statusText,
+          },
+        });
+      }
+      return response;
+    } catch (error: unknown) {
+      this.captureException(error, {
+        source: 'client',
+        url:
+          typeof input === 'string'
+            ? input
+            : input instanceof URL
+            ? input.href
+            : (input as Request).url,
+      });
+      throw error;
+    }
+  };
+}
+
+  // -----------------------------
+  // Metadata Updates
+  // -----------------------------
+  public updateMetadata(metadata: ErrorMetadata): void {
+    Sentry.withScope((scope: Scope) => {
+      Object.entries(metadata).forEach(([key, value]) => {
+        if (value !== undefined) {
+          scope.setTag(key, String(value));
+        }
+      });
+    });
+  }
+
+  // -----------------------------
+  // Capture Errors & Messages
+  // -----------------------------
+  public captureException(error: unknown, context: ErrorContext = {}): void {
+    const errorObj = error instanceof Error ? error : new Error(String(error));
+    const filteredContext = Object.entries(context).reduce(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {} as Record<string, unknown>,
+    );
+
+    Sentry.withScope((scope: Scope) => {
+      if (context.source) {
+        scope.setTag('source', String(context.source));
+      }
+      if (context.url) {
+        scope.setTag('url', String(context.url));
+      }
+      if (context.component) {
+        scope.setTag('component', String(context.component));
+      }
+      if (context.action) {
+        scope.setTag('action', String(context.action));
+      }
+      if (Object.keys(filteredContext).length > 0) {
+        scope.setExtras(filteredContext);
+      }
+      Sentry.captureException(errorObj);
+    });
+  }
+
+  // overloads to satisfy max-params rule
+  public captureMessage(message: string): void;
+  public captureMessage(
+    message: string,
+    severity: ErrorSeverity,
+    context?: ErrorContext,
+  ): void;
+  public captureMessage(
+    message: string,
+    severityOrContext?: ErrorSeverity | ErrorContext,
+    contextParam?: ErrorContext,
+  ): void {
+    let severity: ErrorSeverity = 'info';
+    let context: ErrorContext = {};
+
+    if (typeof severityOrContext === 'string') {
+      severity = severityOrContext;
+      context = contextParam ?? {};
+    } else if (severityOrContext) {
+      context = severityOrContext as ErrorContext;
+    }
+
+    const filteredContext = Object.entries(context).reduce(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = value;
+        }
+        return acc;
+      },
+      {} as Record<string, unknown>,
+    );
+
+    Sentry.withScope((scope: Scope) => {
+      scope.setLevel(severity);
+      if (context.source) {
+        scope.setTag('source', String(context.source));
+      }
+      if (context.url) {
+        scope.setTag('url', String(context.url));
+      }
+      if (context.component) {
+        scope.setTag('component', String(context.component));
+      }
+      if (context.action) {
+        scope.setTag('action', String(context.action));
+      }
+      if (Object.keys(filteredContext).length > 0) {
+        scope.setExtras(filteredContext);
+      }
+      Sentry.captureMessage(message);
+    });
+  }
+
+  // -----------------------------
+  // Breadcrumbs & User
+  // -----------------------------
+  public addBreadcrumb(breadcrumb: Breadcrumb): void {
+    if (!breadcrumb) {
+      return;
+    }
+
+    const validBreadcrumb: Breadcrumb = {
+      ...breadcrumb,
+      timestamp: breadcrumb.timestamp || Date.now() / 1000,
+      level: breadcrumb.level || 'info',
+      category: breadcrumb.category || 'default',
+    };
+
+    Sentry.addBreadcrumb(validBreadcrumb);
+  }
+
+  public setUser(user: User | null): void {
+    if (!user) {
+      Sentry.setUser(null);
+      return;
+    }
+
+    const validUser: User = {
+      id: user.id || 'anonymous',
+      email: user.email,
+      username: user.username,
+      ip_address: user.ip_address,
+      ...user,
+    };
+
+    Sentry.setUser(validUser);
+  }
+}
+
+// -----------------------------
+// Singleton Instance
+// -----------------------------
+export const errorReporter = ErrorReporter.getInstance();
+
+// Initialize on browser
+if (typeof window !== 'undefined') {
+  errorReporter.initialize({
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || '',
+    sessionId: Math.random().toString(36).substring(2, 15),
+  });
+}
+
+// -----------------------------
+// Utility Functions
+// -----------------------------
+export function getTraceData(): Record<string, string> {
+  return {
+    'trace-id': Math.random().toString(36).substring(2, 15),
+    'app-version': process.env.NEXT_PUBLIC_APP_VERSION || '0.0.0',
+  };
+}

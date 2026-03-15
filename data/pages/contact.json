@@ -1,0 +1,71 @@
+{
+  "id": "contact",
+  "title": "Contact Us",
+  "prepend": [
+    {
+      "id": "seo-meta",
+      "key": "SEO",
+      "props": {
+        "title": "Contact Us - Albata",
+        "description": "Get in touch with the Albata team. We're here to help with any questions about our platform.",
+        "ogImage": "https://albata.com/images/contact-og.jpg"
+      }
+    },
+    {
+      "id": "hero-1",
+      "key": "Hero",
+      "props": {
+        "heading": "Contact Us",
+        "subheading": "We're here to help with any questions about Albata",
+        "cta": {
+          "text": "Send Message",
+          "href": "#contact-form"
+        }
+      },
+      "weight": 4
+    },
+    {
+      "id": "contact-form",
+      "key": "RichText",
+      "props": {
+        "content": "# Get in Touch\n\nWe'd love to hear from you. Send us a message and we'll respond as soon as possible.\n\n**Email**: hello@albata.com  \n**Support**: support@albata.com  \n**Phone**: +1 (555) 123-4567"
+      },
+      "weight": 3
+    },
+    {
+      "id": "cta-1",
+      "key": "CTA",
+      "props": {
+        "heading": "Need Quick Help?",
+        "description": "Check out our documentation for answers to common questions.",
+        "primaryButton": {
+          "text": "View Documentation",
+          "href": "/docs",
+          "variant": "primary"
+        },
+        "secondaryButton": {
+          "text": "Browse FAQ",
+          "href": "/faq",
+          "variant": "secondary"
+        }
+      },
+      "weight": 2
+    }
+  ],
+  "constraints": [
+    {
+      "id": "contact-has-info",
+      "rule": {
+        "op": ">=",
+        "args": [
+          { "$ctx": "metrics.totalComponents" },
+          2
+        ]
+      }
+    }
+  ],
+  "context": {
+    "device": "desktop",
+    "locale": "en"
+  }
+}
