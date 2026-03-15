@@ -37,5 +37,6 @@ next-env.d.ts
 # User added
 *.zip
 tmp-*
+tmp-wave1-smoke*
 error.log
 debug.log
